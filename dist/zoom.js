@@ -7,17 +7,8 @@
  * @link https://github.com/fat/zoom.js
  * @license MIT
  *
- * This implementation has the same API as the original, but:
- *
- *   * No ctrl/meta click to open image.
- *   * No support for data-original.
- *   * May be less compatible with older browsers because ES6 and no vendor prefixes.
- *   * Targets only <img> with data-action="zoom" attribute, not all elements with data-action="zoom".
- *   * Zooming is allowed at smaller screen widths than allowed by the original (see zoom.OFFSET).
- *   * Listen for the "click" event on img[data-action="zoom"] using capture (similar to the original),
- *     but does not cancel the event after handling.
- *
- * Needs a related CSS file to work. See the original project for more info.
+ * Needs a related CSS file to work. See the README at
+ * https://github.com/nishanths/zoom.js for more info.
  *
  * The MIT License. Copyright © 2016 Nishanth Shanmugham.
  */
@@ -25,7 +16,7 @@
     var zoom = Object.create(null);
 
     zoom.current = null;
-    zoom.OFFSET = 80;
+    zoom.OFFSET = 10;
     zoom.initialScrollPos = -1;
     zoom.initialTouchPos = -1;
 
@@ -63,6 +54,12 @@
         if (document.body.classList.contains("zoom-overlay-open")) {
             return;
         }
+
+        if (e.metaKey || e.ctrlKey) {
+            window.open((e.target.getAttribute("data-original") || e.target.src), "_blank");
+            return;
+        }
+
         if (e.target.width >= windowWidth() - zoom.OFFSET) {
             return;
         }
