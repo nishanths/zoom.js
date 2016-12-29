@@ -1,6 +1,8 @@
 # ZOOM.JS
 
-A pure JavaScript-only image zooming plugin; as seen on [Medium.com](https://medium.com/designing-medium/image-zoom-on-medium-24d146fc0c20). Has no dependencies on jQuery or Bootstrap.
+A pure JavaScript-only image zooming plugin; as seen on [Medium.com](https://medium.com/designing-medium/image-zoom-on-medium-24d146fc0c20).
+
+Has no dependencies on jQuery or Bootstrap.
 
 This is a port of the original version by @fat: <https://github.com/fat/zoom.js>
 
@@ -39,8 +41,16 @@ The API is the same as in the original implementation. But:
 
 ### Compatibility
 
-Uses ES6 `class`, arrow functions, and the `transitionend` event without vendor prefixes. Should work with Chrome 49, Opera 36, Firefox 49, Edge 12, Safari 10, and iOS 10 or higher.
+Uses ES6 class, arrow functions, and the transitionend event without vendor prefixes. Should work with: 
 
+```
+ * Chrome 49
+ * Opera 36
+ * Firefox 49
+ * Edge 12
+ * Safari 10, and 
+ * iOS 10 or higher
+```
 
 ## License
 
