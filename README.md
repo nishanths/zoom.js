@@ -2,13 +2,15 @@
 
 A pure JavaScript-only image zooming plugin; as seen on [Medium.com](https://medium.com/designing-medium/image-zoom-on-medium-24d146fc0c20).
 
-Has no dependencies on jQuery or Bootstrap.
+Has **no dependencies** on jQuery or Bootstrap.
 
 This is a port of the original version by @fat: <https://github.com/fat/zoom.js>
 
 ## Demo
 
-<https://nishanths.github.io/zoom.js>
+**<https://nishanths.github.io/zoom.js>**
+
+![gif](https://i.imgur.com/gj3foRU.gif)
 
 ## Usage
 
@@ -32,9 +34,6 @@ The API is the same as in the original implementation. But:
 ```
  * May be less compatible with older browsers because this uses ES6 features and
    no vendor prefixes. Details below.
- * The "click" event listener on img[data-action="zoom"] elements does not 
-   cancel the event after handling. This should allow the event to reach any custom
-   event handlers you have setup on the img element.
  * Zoom remains enabled at lower screens widths than allowed in the original implementation. 
    See the OFFSET variable.
 ```
