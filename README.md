@@ -1,46 +1,49 @@
 # ZOOM.JS
 
-A simple jQuery plugin for image zooming; as seen on [Medium](https://medium.com/designing-medium/image-zoom-on-medium-24d146fc0c20).
+A pure JavaScript-only image zooming plugin; as seen on [Medium.com](https://medium.com/designing-medium/image-zoom-on-medium-24d146fc0c20). Has no dependencies on jQuery or Bootstrap.
 
-### Demo
-https://fat.github.io/zoom.js
+This is a port of the original version by @fat: <https://github.com/fat/zoom.js>
 
-### How
+## Demo
+
+<https://nishanths.github.io/zoom.js>
+
+## Usage
 
 1. Link the zoom.js and zoom.css files to your site or application.
 
   ```html
   <link href="css/zoom.css" rel="stylesheet">
-  <script src="js/zoom.js"></script>
+  <script src="dist/zoom.js"></script>
   ```
 
-2. zoom.js is dependent on [transition.js file](https://raw.github.com/twbs/bootstrap/master/js/transition.js) from Bootstrap, so make sure to include that as well.
-
-  ```html
-  <script src="js/transition.js"></script>
-  ```
-
-3. Add a `data-action="zoom"` attribute to the images you want to make zoomable. For example:
+2. Add a `data-action="zoom"` attribute to the images you want to make zoomable. For example:
 
   ```html
   <img src="img/blog_post_featured.png" data-action="zoom">
   ```
 
+## Differences from the original implementation
 
-### Why
+The API is the same as in the original implementation. But:
 
-It's the best way to zoom an image. It transitions/zooms in really smoothly, and then when you're done, scrolls away, [esc] keys away, clicks away… clean af.
+```
+ * May be less compatible with older browsers because this uses ES6 features and
+   no vendor prefixes. Details below.
+ * The "click" event listener on img[data-action="zoom"] elements does not 
+   cancel the event after handling. This should allow the event to reach any custom
+   event handlers you have setup on the img element.
+ * Zoom remains enabled at lower screens widths than allowed in the original implementation. 
+   See the OFFSET variable.
+```
 
-If you hold your meta key (`⌘` on mac) or (`ctrl` on windows), it will open in a new tab. wow.
+### Compatibility
 
-ps. use a `data-original` attr to link to a separate image. Just for meta-clicking tho.
-
-
-### Where
-
-zoom.js should (in theory) work in all relevant browsers (ie9+). If not, create an issue! Thanks!
+Uses ES6 `class`, arrow functions, and the `transitionend` event without vendor prefixes. Should work with Chrome 49, Opera 36, Firefox 49, Edge 12, Safari 10, and iOS 10 or higher.
 
 
-### Who
+## License
 
-Written by <a href="//twitter.com/fat">@fat</a>, made better by you.
+[Original license](https://raw.githubusercontent.com/fat/zoom.js/master/MIT-LICENSE.txt)
+
+The MIT License. © 2016 Nishanth Shanmugham.
