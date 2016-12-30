@@ -51,6 +51,8 @@ Uses ES6 class, arrow functions, and the transitionend event without vendor pref
  * iOS 10 or higher
 ```
 
+If you need improved compatibility, please [create an issue](https://github.com/nishanths/zoom.js/issues).
+
 ## License
 
 [Original license](https://raw.githubusercontent.com/fat/zoom.js/master/MIT-LICENSE.txt)
