@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/nishanths/zoom.js",
   "devDependencies": {
-    "prettydiff": "^99.0.1"
+    "prettydiff": "99.0.1"
   }
 }
