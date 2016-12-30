@@ -1,6 +1,6 @@
 # ZOOM.JS
 
-A pure JavaScript-only image zooming plugin; as seen on [Medium.com](https://medium.com/designing-medium/image-zoom-on-medium-24d146fc0c20).
+A pure JavaScript image zooming plugin; as seen on [Medium.com](https://medium.com/designing-medium/image-zoom-on-medium-24d146fc0c20).
 
 Has **no dependencies** on jQuery or Bootstrap.
 
@@ -8,7 +8,7 @@ This is a port of the original version by @fat: <https://github.com/fat/zoom.js>
 
 ## Demo
 
-**<https://nishanths.github.io/zoom.js>**
+<https://nishanths.github.io/zoom.js>
 
 ![gif](https://i.imgur.com/gj3foRU.gif)
 
@@ -32,10 +32,10 @@ This is a port of the original version by @fat: <https://github.com/fat/zoom.js>
 The API is the same as in the original implementation. But:
 
 ```
- * May be less compatible with older browsers because this uses ES6 features and
-   no vendor prefixes. Details below.
- * Zoom remains enabled at lower screens widths than allowed in the original implementation. 
-   See the OFFSET variable.
+ * May be less compatible with older browsers because this uses ES6 features
+   and no vendor prefixes. Details below.
+ * Zoom remains enabled at lower screens widths than allowed in the original
+   implementation.  See the OFFSET variable.
 ```
 
 ### Compatibility
