@@ -16,7 +16,7 @@
     var zoom = Object.create(null);
 
     zoom.current = null;
-    zoom.OFFSET = 10;
+    zoom.OFFSET = 80;
     zoom.initialScrollPos = -1;
     zoom.initialTouchPos = -1;
 

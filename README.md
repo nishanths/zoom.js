@@ -29,14 +29,9 @@ This is a port of the original version by @fat: <https://github.com/fat/zoom.js>
 
 ## Differences from the original implementation
 
-The API is the same as in the original implementation. But:
-
-```
- * May be less compatible with older browsers because this uses ES6 features
-   and no vendor prefixes. Details below.
- * Zoom remains enabled at lower screens widths than allowed in the original
-   implementation.  See the OFFSET variable.
-```
+The API is the same as in the original implementation. But this
+implementation may be less compatible with older browsers because this uses
+ES6 features and no vendor prefixes. Details below.
 
 ### Compatibility
 
