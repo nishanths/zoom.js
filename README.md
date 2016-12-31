@@ -29,11 +29,22 @@ This is a port of the original version by @fat: <https://github.com/fat/zoom.js>
 
 ## Differences from the original implementation
 
-The API is the same as in the original implementation. But browser compatibility may be lower since this does not use vendor prefixes.
+The API is the same as in the original implementation. But this
+implementation may be less compatible with older browsers because this uses
+ES6 features and no vendor prefixes. Details below.
 
 ### Compatibility
 
-Uses the transitionend event without vendor prefixes, so IE 10+. 
+Uses ES6 class, arrow functions, and the transitionend event without vendor prefixes. Should work with: 
+
+```
+ * Chrome 49
+ * Opera 36
+ * Firefox 49
+ * Edge 12
+ * Safari 10, and 
+ * iOS 10 or higher
+```
 
 If you need improved compatibility, please [create an issue](https://github.com/nishanths/zoom.js/issues).
 
