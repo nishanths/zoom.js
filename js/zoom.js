@@ -12,7 +12,7 @@
  *
  * The MIT License. Copyright © 2016 Nishanth Shanmugham.
  */
-(_ => {
+(() => {
     var zoom = Object.create(null);
 
     zoom.current = null;
@@ -20,10 +20,8 @@
     zoom.initialScrollPos = -1;
     zoom.initialTouchPos = -1;
 
-    var windowWidth = _ => document.documentElement.clientWidth;
-    var windowHeight = _ => document.documentElement.clientHeight;
-    var elementWidth = elem => Math.max(elem.clientWidth, elem.offsetWidth, elem.scrollWidth);
-    var elementHeight = elem => Math.max(elem.clientHeight, elem.offsetHeight, elem.scrollHeight);
+    var windowWidth = () => document.documentElement.clientWidth;
+    var windowHeight = () => document.documentElement.clientHeight;
 
     var elemOffset = elem => {
         var rect = elem.getBoundingClientRect();
@@ -43,7 +41,7 @@
         elem.addEventListener(type, fn);
     };
 
-    zoom.setup = _ => {
+    zoom.setup = () => {
         var elems = document.querySelectorAll("img[data-action='zoom']");
         for (var i = 0; i < elems.length; i++) {
             elems[i].addEventListener("click", zoom.prepareZoom);
@@ -85,21 +83,21 @@
         zoom.current = null;
     };
 
-    zoom.addCloseListeners = _ => {
+    zoom.addCloseListeners = () => {
         document.addEventListener("scroll", zoom.handleScroll);
         document.addEventListener("keyup", zoom.handleKeyup);
         document.addEventListener("touchstart", zoom.handleTouchStart);
         document.addEventListener("click", zoom.handleClick, true);
     };
 
-    zoom.removeCloseListeners = _ => {
+    zoom.removeCloseListeners = () => {
         document.removeEventListener("scroll", zoom.handleScroll);
         document.removeEventListener("keyup", zoom.handleKeyup);
         document.removeEventListener("touchstart", zoom.handleTouchStart);
         document.removeEventListener("click", zoom.handleClick, true);
     };
 
-    zoom.handleScroll = _ => {
+    zoom.handleScroll = () => {
         if (zoom.initialScrollPos == -1) {
             zoom.initialScrollPos = window.pageYOffset;
         }
@@ -138,7 +136,7 @@
         }
     };
 
-    zoom.handleClick = e => {
+    zoom.handleClick = () => {
         zoom.closeCurrent();
     };
 
@@ -187,7 +185,6 @@
         }
 
         calculateScale(size) {
-            var scrollTop = window.pageYOffset;
             var maxScaleFactor = size.w / this.img.width;
 
             var viewportWidth = (windowWidth() - zoom.OFFSET);
@@ -247,7 +244,7 @@
             }
             this.wrap.style.transform = "none";
 
-            once(this.img, "transitionend", _ => {
+            once(this.img, "transitionend", () => {
                 this.dispose();
                 // XXX(nishanths): remove class should happen after dispose. Otherwise,
                 // a new click event could fire and create a duplicate ZoomImage for
@@ -257,7 +254,7 @@
         }
     }
 
-    document.addEventListener("DOMContentLoaded", _ => {
+    document.addEventListener("DOMContentLoaded", () => {
         zoom.setup();
     });
 })();
