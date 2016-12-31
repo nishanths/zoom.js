@@ -33,7 +33,7 @@ The API is the same as in the original implementation. But browser compatibility
 
 ### Compatibility
 
-Uses the transitionend event without vendor prefixes, so IE 10 or higher. 
+Uses the transitionend event without vendor prefixes, so IE 10+. 
 
 If you need improved compatibility, please [create an issue](https://github.com/nishanths/zoom.js/issues).
 
