@@ -120,7 +120,7 @@
             return;
         }
 
-        initialTouchPos = t.pageY;
+        zoom.initialTouchPos = t.pageY;
         e.target.addEventListener("touchmove", zoom.handleTouchMove);
     };
 
@@ -130,7 +130,7 @@
             return;
         }
 
-        if (Math.abs(t.pageY - initialTouchPos) > 10) {
+        if (Math.abs(t.pageY - zoom.initialTouchPos) > 10) {
             zoom.closeCurrent();
             e.target.removeEventListener("touchmove", zoom.handleTouchMove);
         }
