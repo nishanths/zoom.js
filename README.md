@@ -14,7 +14,7 @@ This is a port of the original version by @fat: <https://github.com/fat/zoom.js>
 
 ## Usage
 
-1. Link the zoom.js and zoom.css files to your site or application.
+1. Link the zoom.js and zoom.css files to your site or application. You can either [download](https://github.com/nishanths/zoom.js/archive/master.zip) the files from GitHub or install via npm: `npm i @nishanths/zoom.js`.
 
   ```html
   <link href="css/zoom.css" rel="stylesheet">
