@@ -1,7 +1,7 @@
 {
-  "name": "zoom.js",
+  "name": "@nishanths/zoom.js",
   "version": "0.0.4",
-  "description": "It's the best way to zoom an image",
+  "description": "Medium.com's image zoom with no dependencies",
   "main": "js/zoom.js",
   "repository": {
     "type": "git",
