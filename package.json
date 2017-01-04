@@ -1,8 +1,8 @@
 {
   "name": "@nishanths/zoom.js",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "Medium.com's image zoom with no dependencies",
-  "main": "js/zoom.js",
+  "main": "src/zoom.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:nishanths/zoom.js.git"
@@ -21,6 +21,7 @@
     "babel-cli": "6.18.0",
     "babel-plugin-iife-wrap": "1.1.0",
     "babel-preset-es2015-script": "1.1.0",
-    "uglifyjs": "2.4.10"
+    "uglifyjs": "2.4.10",
+    "webpack": "2.2.0-rc.3"
   }
 }

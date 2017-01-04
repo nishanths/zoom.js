@@ -1,11 +1,12 @@
-.PHONY: build clean
+.PHONY: dist clean
 
+webpack = ./node_modules/webpack/bin/webpack.js
 babel = ./node_modules/babel-cli/bin/babel.js
 uglifyjs = node ./node_modules/uglifyjs/bin/uglifyjs
 
 define PREAMBLE
 /**
- * Pure JavaScript-only implementation of zoom.js.
+ * Pure JavaScript implementation of zoom.js.
  *
  * Original preamble:
  * zoom.js - It's the best way to zoom an image
@@ -22,12 +23,17 @@ endef
 
 export PREAMBLE
 
-OPTS = --screw-ie8 --preamble="$$PREAMBLE" --stats
+OPTS = --screw-ie8 --preamble="$$PREAMBLE"
 
-build: clean
+dist: clean
 	mkdir dist
-	# transpile, wrap in IIFE
-	$(babel) js/*.js --presets=es2015-script --plugins=iife-wrap --out-file=dist/zoom.js
+
+	# make single script file
+	$(webpack) script/init.js dist/zoom.js
+
+	# transpile down to ES5, wrap in IIFE
+	$(babel) dist/zoom.js --presets=es2015-script --plugins=iife-wrap --out-file=dist/zoom.js
+
 	# dist
 	$(uglifyjs) dist/zoom.js $(OPTS) --beautify -o dist/zoom.js
 	$(uglifyjs) dist/zoom.js $(OPTS) --compress --mangle -o dist/zoom.min.js
