@@ -1,4 +1,4 @@
-import { zoom } from "../js/zoom.js";
+import { zoom } from "../src/zoom.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     var elems = document.querySelectorAll("img[data-action='zoom']");
