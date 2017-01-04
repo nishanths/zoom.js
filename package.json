@@ -1,6 +1,6 @@
 {
   "name": "@nishanths/zoom.js",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "Medium.com's image zoom with no dependencies",
   "main": "js/zoom.js",
   "repository": {
