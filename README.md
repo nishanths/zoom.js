@@ -1,5 +1,7 @@
 # ZOOM.JS
 
+[![npm (scoped)](https://img.shields.io/npm/v/@nishanths/zoom.js.svg)](https://www.npmjs.com/package/@nishanths/zoom.js)
+
 A pure JavaScript image zooming plugin; as seen on
 [Medium.com](https://medium.com/designing-medium/image-zoom-on-medium-24d146fc0c20). 
 
@@ -9,7 +11,7 @@ This is a port of the original version by @fat: <https://github.com/fat/zoom.js>
 
 ## Usage
 
-You can use zoom.js directly as a script, or install via [npm](https://www.npmjs.com/package/@nishanths/zoom.js).
+You can use zoom.js directly as a script, or install via [npm](https://www.npmjs.com/package/@nishanths/zoom.js). 
 
 ### Direct
 
@@ -29,8 +31,14 @@ You can use zoom.js directly as a script, or install via [npm](https://www.npmjs
 
 ### Via npm
 
-1. Install the package `npm i @nishanths/zoom.js`
-2. Import the package and call `zoom.setup(elem)` for each image you want to
+1. Install the package: `npm i @nishanths/zoom.js`
+1. Link the zoom.css file to your application.
+
+  ```html
+   <link href="css/zoom.css" rel="stylesheet">
+   ```
+
+1. Import the package and call `zoom.setup(elem)` for each image you want to
    make zoomable. 
 
   ```js
