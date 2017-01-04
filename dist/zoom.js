@@ -1,5 +1,5 @@
 /**
- * Pure JavaScript-only implementation of zoom.js.
+ * Pure JavaScript implementation of zoom.js.
  *
  * Original preamble:
  * zoom.js - It's the best way to zoom an image
@@ -35,12 +35,61 @@
             throw new TypeError("Cannot call a class as a function");
         }
     }
-    (function() {
-        var zoom = Object.create(null);
-        zoom.current = null;
-        zoom.OFFSET = 80;
-        zoom.initialScrollPos = -1;
-        zoom.initialTouchPos = -1;
+    (function(modules) {
+        var installedModules = {};
+        function __webpack_require__(moduleId) {
+            if (installedModules[moduleId]) return installedModules[moduleId].exports;
+            var module = installedModules[moduleId] = {
+                i: moduleId,
+                l: false,
+                exports: {}
+            };
+            modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+            module.l = true;
+            return module.exports;
+        }
+        __webpack_require__.m = modules;
+        __webpack_require__.c = installedModules;
+        __webpack_require__.i = function(value) {
+            return value;
+        };
+        __webpack_require__.d = function(exports, name, getter) {
+            if (!__webpack_require__.o(exports, name)) {
+                Object.defineProperty(exports, name, {
+                    configurable: false,
+                    enumerable: true,
+                    get: getter
+                });
+            }
+        };
+        __webpack_require__.n = function(module) {
+            var getter = module && module.__esModule ? function getDefault() {
+                return module["default"];
+            } : function getModuleExports() {
+                return module;
+            };
+            __webpack_require__.d(getter, "a", getter);
+            return getter;
+        };
+        __webpack_require__.o = function(object, property) {
+            return Object.prototype.hasOwnProperty.call(object, property);
+        };
+        __webpack_require__.p = "";
+        return __webpack_require__(__webpack_require__.s = 3);
+    })([ function(module, exports, __webpack_require__) {
+        "use strict";
+        __webpack_require__.d(exports, "a", function() {
+            return windowWidth;
+        });
+        __webpack_require__.d(exports, "b", function() {
+            return windowHeight;
+        });
+        __webpack_require__.d(exports, "c", function() {
+            return elemOffset;
+        });
+        __webpack_require__.d(exports, "d", function() {
+            return once;
+        });
         var windowWidth = function windowWidth() {
             return document.documentElement.clientWidth;
         };
@@ -63,13 +112,21 @@
             };
             elem.addEventListener(type, fn);
         };
-        zoom.setup = function() {
-            var elems = document.querySelectorAll("img[data-action='zoom']");
-            for (var i = 0; i < elems.length; i++) {
-                elems[i].addEventListener("click", zoom.prepareZoom);
-            }
+    }, function(module, exports, __webpack_require__) {
+        "use strict";
+        var __WEBPACK_IMPORTED_MODULE_0__zoom_image_js__ = __webpack_require__(2);
+        var __WEBPACK_IMPORTED_MODULE_1__utils_js__ = __webpack_require__(0);
+        __webpack_require__.d(exports, "a", function() {
+            return zoom;
+        });
+        var current = null;
+        var offset = 80;
+        var initialScrollPos = -1;
+        var initialTouchPos = -1;
+        var setup = function setup(elem) {
+            elem.addEventListener("click", prepareZoom);
         };
-        zoom.prepareZoom = function(e) {
+        var prepareZoom = function prepareZoom(e) {
             if (document.body.classList.contains("zoom-overlay-open")) {
                 return;
             }
@@ -77,85 +134,91 @@
                 window.open(e.target.getAttribute("data-original") || e.target.src, "_blank");
                 return;
             }
-            if (e.target.width >= windowWidth() - zoom.OFFSET) {
+            if (e.target.width >= __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_js__["a"])() - offset) {
                 return;
             }
-            zoom.closeCurrent(true);
-            zoom.current = new ZoomImage(e.target);
-            zoom.current.zoom();
-            zoom.addCloseListeners();
+            closeCurrent(true);
+            current = new __WEBPACK_IMPORTED_MODULE_0__zoom_image_js__["a"](e.target, offset);
+            current.zoom();
+            addCloseListeners();
         };
-        zoom.closeCurrent = function(force) {
-            if (zoom.current == null) {
+        var closeCurrent = function closeCurrent(force) {
+            if (current == null) {
                 return;
             }
             if (force) {
-                zoom.current.dispose();
+                current.dispose();
             } else {
-                zoom.current.close();
+                current.close();
             }
-            zoom.removeCloseListeners();
-            zoom.current = null;
+            removeCloseListeners();
+            current = null;
         };
-        zoom.addCloseListeners = function() {
-            document.addEventListener("scroll", zoom.handleScroll);
-            document.addEventListener("keyup", zoom.handleKeyup);
-            document.addEventListener("touchstart", zoom.handleTouchStart);
-            document.addEventListener("click", zoom.handleClick, true);
+        var addCloseListeners = function addCloseListeners() {
+            document.addEventListener("scroll", handleScroll);
+            document.addEventListener("keyup", handleKeyup);
+            document.addEventListener("touchstart", handleTouchStart);
+            document.addEventListener("click", handleClick, true);
         };
-        zoom.removeCloseListeners = function() {
-            document.removeEventListener("scroll", zoom.handleScroll);
-            document.removeEventListener("keyup", zoom.handleKeyup);
-            document.removeEventListener("touchstart", zoom.handleTouchStart);
-            document.removeEventListener("click", zoom.handleClick, true);
+        var removeCloseListeners = function removeCloseListeners() {
+            document.removeEventListener("scroll", handleScroll);
+            document.removeEventListener("keyup", handleKeyup);
+            document.removeEventListener("touchstart", handleTouchStart);
+            document.removeEventListener("click", handleClick, true);
         };
-        zoom.handleScroll = function() {
-            if (zoom.initialScrollPos == -1) {
-                zoom.initialScrollPos = window.pageYOffset;
+        var handleScroll = function handleScroll() {
+            if (initialScrollPos == -1) {
+                initialScrollPos = window.pageYOffset;
             }
-            var deltaY = Math.abs(zoom.initialScrollPos - window.pageYOffset);
+            var deltaY = Math.abs(initialScrollPos - window.pageYOffset);
             if (deltaY >= 40) {
-                zoom.closeCurrent();
+                closeCurrent();
             }
         };
-        zoom.handleKeyup = function(e) {
+        var handleKeyup = function handleKeyup(e) {
             if (e.keyCode == 27) {
-                zoom.closeCurrent();
+                closeCurrent();
             }
         };
-        zoom.handleTouchStart = function(e) {
+        var handleTouchStart = function handleTouchStart(e) {
             var t = e.touches[0];
             if (t == null) {
                 return;
             }
-            zoom.initialTouchPos = t.pageY;
-            e.target.addEventListener("touchmove", zoom.handleTouchMove);
+            initialTouchPos = t.pageY;
+            e.target.addEventListener("touchmove", handleTouchMove);
         };
-        zoom.handleTouchMove = function(e) {
+        var handleTouchMove = function handleTouchMove(e) {
             var t = e.touches[0];
             if (t == null) {
                 return;
             }
-            if (Math.abs(t.pageY - zoom.initialTouchPos) > 10) {
-                zoom.closeCurrent();
-                e.target.removeEventListener("touchmove", zoom.handleTouchMove);
+            if (Math.abs(t.pageY - initialTouchPos) > 10) {
+                closeCurrent();
+                e.target.removeEventListener("touchmove", handleTouchMove);
             }
         };
-        zoom.handleClick = function() {
-            zoom.closeCurrent();
+        var handleClick = function handleClick() {
+            closeCurrent();
         };
+        var zoom = Object.create(null);
+        zoom.setup = setup;
+    }, function(module, exports, __webpack_require__) {
+        "use strict";
+        var __WEBPACK_IMPORTED_MODULE_0__utils_js__ = __webpack_require__(0);
         var Size = function Size(w, h) {
             _classCallCheck(this, Size);
             this.w = w;
             this.h = h;
         };
         var ZoomImage = function() {
-            function ZoomImage(img) {
+            function ZoomImage(img, offset) {
                 _classCallCheck(this, ZoomImage);
                 this.img = img;
                 this.preservedTransform = img.style.transform;
                 this.wrap = null;
                 this.overlay = null;
+                this.offset = offset;
             }
             _createClass(ZoomImage, [ {
                 key: "forceRepaint",
@@ -186,8 +249,8 @@
                 key: "calculateScale",
                 value: function calculateScale(size) {
                     var maxScaleFactor = size.w / this.img.width;
-                    var viewportWidth = windowWidth() - zoom.OFFSET;
-                    var viewportHeight = windowHeight() - zoom.OFFSET;
+                    var viewportWidth = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["a"])() - this.offset;
+                    var viewportHeight = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["b"])() - this.offset;
                     var imageAspectRatio = size.w / size.h;
                     var viewportAspectRatio = viewportWidth / viewportHeight;
                     if (size.w < viewportWidth && size.h < viewportHeight) {
@@ -201,10 +264,10 @@
             }, {
                 key: "animate",
                 value: function animate(scale) {
-                    var imageOffset = elemOffset(this.img);
+                    var imageOffset = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["c"])(this.img);
                     var scrollTop = window.pageYOffset;
-                    var viewportX = windowWidth() / 2;
-                    var viewportY = scrollTop + windowHeight() / 2;
+                    var viewportX = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["a"])() / 2;
+                    var viewportY = scrollTop + __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["b"])() / 2;
                     var imageCenterX = imageOffset.left + this.img.width / 2;
                     var imageCenterY = imageOffset.top + this.img.height / 2;
                     var tx = viewportX - imageCenterX;
@@ -238,7 +301,7 @@
                         this.img.removeAttribute("style");
                     }
                     this.wrap.style.transform = "none";
-                    once(this.img, "transitionend", function() {
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["d"])(this.img, "transitionend", function() {
                         _this.dispose();
                         document.body.classList.remove("zoom-overlay-open");
                     });
@@ -246,8 +309,18 @@
             } ]);
             return ZoomImage;
         }();
-        document.addEventListener("DOMContentLoaded", function() {
-            zoom.setup();
+        exports["a"] = ZoomImage;
+    }, function(module, exports, __webpack_require__) {
+        "use strict";
+        Object.defineProperty(exports, "__esModule", {
+            value: true
         });
-    })();
+        var __WEBPACK_IMPORTED_MODULE_0__js_zoom_js__ = __webpack_require__(1);
+        document.addEventListener("DOMContentLoaded", function() {
+            var elems = document.querySelectorAll("img[data-action='zoom']");
+            for (var i = 0; i < elems.length; i++) {
+                __WEBPACK_IMPORTED_MODULE_0__js_zoom_js__["a"].setup(elems[i]);
+            }
+        });
+    } ]);
 })();
