@@ -315,11 +315,11 @@
         Object.defineProperty(exports, "__esModule", {
             value: true
         });
-        var __WEBPACK_IMPORTED_MODULE_0__js_zoom_js__ = __webpack_require__(1);
+        var __WEBPACK_IMPORTED_MODULE_0__src_zoom_js__ = __webpack_require__(1);
         document.addEventListener("DOMContentLoaded", function() {
             var elems = document.querySelectorAll("img[data-action='zoom']");
             for (var i = 0; i < elems.length; i++) {
-                __WEBPACK_IMPORTED_MODULE_0__js_zoom_js__["a"].setup(elems[i]);
+                __WEBPACK_IMPORTED_MODULE_0__src_zoom_js__["a"].setup(elems[i]);
             }
         });
     } ]);

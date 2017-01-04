@@ -3,12 +3,13 @@
 A pure JavaScript image zooming plugin; as seen on
 [Medium.com](https://medium.com/designing-medium/image-zoom-on-medium-24d146fc0c20). 
 
-Has no jQuery or Bootstrap dependencies. This is a port of the original
-version by @fat: <https://github.com/fat/zoom.js>.
+Has no jQuery or Bootstrap dependencies.
+
+This is a port of the original version by @fat: <https://github.com/fat/zoom.js>.
 
 ## Usage
 
-You can use zoom.js directly as a script, or install via npm.
+You can use zoom.js directly as a script, or install via [npm](https://www.npmjs.com/package/@nishanths/zoom.js).
 
 ### Direct
 
@@ -29,18 +30,18 @@ You can use zoom.js directly as a script, or install via npm.
 ### Via npm
 
 1. Install the package `npm i @nishanths/zoom.js`
-2. Import the package and call `zoom.setup(elem)` for the images you want to
+2. Import the package and call `zoom.setup(elem)` for each image you want to
    make zoomable. 
 
-```js
-import { zoom } from "@nishanths/zoom.js";
+  ```js
+  import { zoom } from "@nishanths/zoom.js";
 
-var imgElem = new Image();
-imgElem.src = "tree.png";
-document.body.appendChild(imgElem);
+  var imgElem = new Image();
+  imgElem.src = "tree.png";
+  document.body.appendChild(imgElem);
 
-zoom.setup(imgElem);
-```
+  zoom.setup(imgElem);
+  ```
 
 ## Demo
 
