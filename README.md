@@ -72,4 +72,9 @@ It has the same behavior and all the features from the original implementation. 
 
 [Original license](https://raw.githubusercontent.com/fat/zoom.js/master/MIT-LICENSE.txt)
 
+This is a fork of the original zoom.js implementation by @fat.
+Copyrights for the original project are held by @fat. All other copyright
+for changes in the fork are held by Nishanth Shanmugham.
+
+Copyright (c) 2013 @fat
 The MIT License. Copyright © 2016 Nishanth Shanmugham.
