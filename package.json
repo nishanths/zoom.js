@@ -1,8 +1,9 @@
 {
   "name": "@nishanths/zoom.js",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Medium.com's image zoom with no dependencies",
-  "main": "src/zoom.js",
+  "main": "dist/zoom.js",
+  "jsnext:main": "src/zoom.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:nishanths/zoom.js.git"
