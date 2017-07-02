@@ -27,9 +27,9 @@ img.zoom-img {
   pointer-events: none;
   filter: "alpha(opacity=0)";
   opacity: 0;
-  -webkit-transition:      opacity 300ms;
-       -o-transition:      opacity 300ms;
-          transition:      opacity 300ms;
+  -webkit-transition:      opacity 300ms ease-in-out;
+       -o-transition:      opacity 300ms ease-in-out;
+          transition:      opacity 300ms ease-in-out;
 }
 .zoom-overlay-open .zoom-overlay {
   filter: "alpha(opacity=100)";
@@ -38,4 +38,7 @@ img.zoom-img {
 .zoom-overlay-open,
 .zoom-overlay-transitioning {
   cursor: default;
+}
+.zoom-overlay-transitioning .zoom-overlay {
+  opacity: 0;
 }
