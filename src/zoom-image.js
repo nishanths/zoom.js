@@ -1,4 +1,4 @@
-import { elemOffset, once, windowWidth, windowHeight } from "./utils.js";
+import { elemOffset, once, windowWidth, windowHeight, backgroundImageDimensions } from "./utils.js";
 
 class Size {
     constructor(w, h) {
@@ -10,6 +10,7 @@ class Size {
 export class ZoomImage {
     constructor(img, offset) {
         this.img = img;
+        this.clientRect = img.getBoundingClientRect()
         this.preservedTransform = img.style.transform;
         this.wrap = null;
         this.overlay = null;
@@ -17,12 +18,13 @@ export class ZoomImage {
     }
 
     forceRepaint() {
-        var _ = this.img.offsetWidth; 
+        var _ = this.img.offsetWidth;
         return;
     }
 
     zoom() {
-        var size = new Size(this.img.naturalWidth, this.img.naturalHeight);
+        var dims = backgroundImageDimensions(this.img)
+        var size = new Size(dims.naturalWidth, dims.naturalHeight);
 
         this.wrap = document.createElement("div");
         this.wrap.classList.add("zoom-img-wrap");
@@ -35,6 +37,9 @@ export class ZoomImage {
         this.overlay = document.createElement("div");
         this.overlay.classList.add("zoom-overlay");
         document.body.appendChild(this.overlay);
+        this.overlay.addEventListener("click", (e) => {
+            e.stopImmediatePropagation()
+        })
 
         this.forceRepaint();
         var scale = this.calculateScale(size);
@@ -46,7 +51,7 @@ export class ZoomImage {
     }
 
     calculateScale(size) {
-        var maxScaleFactor = size.w / this.img.width;
+        var maxScaleFactor = size.w / this.clientRect.width;
 
         var viewportWidth = (windowWidth() - this.offset);
         var viewportHeight = (windowHeight() - this.offset);
@@ -69,8 +74,8 @@ export class ZoomImage {
         var viewportX = (windowWidth() / 2);
         var viewportY = scrollTop + (windowHeight() / 2);
 
-        var imageCenterX = imageOffset.left + (this.img.width / 2);
-        var imageCenterY = imageOffset.top + (this.img.height / 2);
+        var imageCenterX = imageOffset.left + (this.clientRect.width / 2);
+        var imageCenterY = imageOffset.top + (this.clientRect.height / 2);
 
         var tx = viewportX - imageCenterX;
         var ty = viewportY - imageCenterY;
@@ -94,7 +99,6 @@ export class ZoomImage {
         this.wrap.parentNode.removeChild(this.wrap);
 
         document.body.removeChild(this.overlay);
-        document.body.classList.remove("zoom-overlay-transitioning");
     }
 
     close() {
@@ -106,6 +110,7 @@ export class ZoomImage {
         this.wrap.style.transform = "none";
 
         once(this.img, "transitionend", () => {
+            document.body.classList.remove("zoom-overlay-transitioning");
             this.dispose();
             // XXX(nishanths): remove class should happen after dispose. Otherwise,
             // a new click event could fire and create a duplicate ZoomImage for

@@ -1,19 +1,3 @@
-/**
- * Pure JavaScript implementation of zoom.js.
- *
- * Original preamble:
- * zoom.js - It's the best way to zoom an image
- * @version v0.0.2
- * @link https://github.com/fat/zoom.js
- * @license MIT
- *
- * This is a fork of the original zoom.js implementation by @fat.
- * Copyrights for the original project are held by @fat. All other copyright
- * for changes in the fork are held by Nishanth Shanmugham.
- *
- * Copyright (c) 2013 @fat
- * The MIT License. Copyright © 2016 Nishanth Shanmugham.
- */
 (function() {
     "use strict";
     var _createClass = function() {
@@ -83,14 +67,17 @@
         __webpack_require__.d(exports, "a", function() {
             return windowWidth;
         });
-        __webpack_require__.d(exports, "b", function() {
+        __webpack_require__.d(exports, "c", function() {
             return windowHeight;
         });
-        __webpack_require__.d(exports, "c", function() {
+        __webpack_require__.d(exports, "d", function() {
             return elemOffset;
         });
-        __webpack_require__.d(exports, "d", function() {
+        __webpack_require__.d(exports, "e", function() {
             return once;
+        });
+        __webpack_require__.d(exports, "b", function() {
+            return backgroundImageDimensions;
         });
         var windowWidth = function windowWidth() {
             return document.documentElement.clientWidth;
@@ -113,6 +100,15 @@
                 handler();
             };
             elem.addEventListener(type, fn);
+        };
+        var backgroundImageDimensions = function backgroundImageDimensions(elem) {
+            var imageSrc = elem.style.backgroundImage.replace(/url\((['"])?(.*?)\1\)/gi, "$2").split(",")[0];
+            var image = new Image();
+            image.src = imageSrc;
+            return {
+                naturalWidth: image.naturalWidth,
+                naturalHeight: image.naturalHeight
+            };
         };
     }, function(module, exports, __webpack_require__) {
         "use strict";
@@ -139,20 +135,16 @@
             if (e.target.width >= __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_js__["a"])() - offset) {
                 return;
             }
-            closeCurrent(true);
+            closeCurrent();
             current = new __WEBPACK_IMPORTED_MODULE_0__zoom_image_js__["a"](e.target, offset);
             current.zoom();
             addCloseListeners();
         };
-        var closeCurrent = function closeCurrent(force) {
+        var closeCurrent = function closeCurrent() {
             if (current == null) {
                 return;
             }
-            if (force) {
-                current.dispose();
-            } else {
-                current.close();
-            }
+            current.close();
             removeCloseListeners();
             current = null;
         };
@@ -205,6 +197,7 @@
         };
         var zoom = Object.create(null);
         zoom.setup = setup;
+        window.zoom = zoom;
     }, function(module, exports, __webpack_require__) {
         "use strict";
         var __WEBPACK_IMPORTED_MODULE_0__utils_js__ = __webpack_require__(0);
@@ -217,6 +210,7 @@
             function ZoomImage(img, offset) {
                 _classCallCheck(this, ZoomImage);
                 this.img = img;
+                this.clientRect = img.getBoundingClientRect();
                 this.preservedTransform = img.style.transform;
                 this.wrap = null;
                 this.overlay = null;
@@ -231,7 +225,8 @@
             }, {
                 key: "zoom",
                 value: function zoom() {
-                    var size = new Size(this.img.naturalWidth, this.img.naturalHeight);
+                    var dims = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["b"])(this.img);
+                    var size = new Size(dims.naturalWidth, dims.naturalHeight);
                     this.wrap = document.createElement("div");
                     this.wrap.classList.add("zoom-img-wrap");
                     this.img.parentNode.insertBefore(this.wrap, this.img);
@@ -241,6 +236,9 @@
                     this.overlay = document.createElement("div");
                     this.overlay.classList.add("zoom-overlay");
                     document.body.appendChild(this.overlay);
+                    this.overlay.addEventListener("click", function(e) {
+                        e.stopImmediatePropagation();
+                    });
                     this.forceRepaint();
                     var scale = this.calculateScale(size);
                     this.forceRepaint();
@@ -250,9 +248,9 @@
             }, {
                 key: "calculateScale",
                 value: function calculateScale(size) {
-                    var maxScaleFactor = size.w / this.img.width;
+                    var maxScaleFactor = size.w / this.clientRect.width;
                     var viewportWidth = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["a"])() - this.offset;
-                    var viewportHeight = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["b"])() - this.offset;
+                    var viewportHeight = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["c"])() - this.offset;
                     var imageAspectRatio = size.w / size.h;
                     var viewportAspectRatio = viewportWidth / viewportHeight;
                     if (size.w < viewportWidth && size.h < viewportHeight) {
@@ -266,12 +264,12 @@
             }, {
                 key: "animate",
                 value: function animate(scale) {
-                    var imageOffset = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["c"])(this.img);
+                    var imageOffset = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["d"])(this.img);
                     var scrollTop = window.pageYOffset;
                     var viewportX = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["a"])() / 2;
-                    var viewportY = scrollTop + __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["b"])() / 2;
-                    var imageCenterX = imageOffset.left + this.img.width / 2;
-                    var imageCenterY = imageOffset.top + this.img.height / 2;
+                    var viewportY = scrollTop + __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["c"])() / 2;
+                    var imageCenterX = imageOffset.left + this.clientRect.width / 2;
+                    var imageCenterY = imageOffset.top + this.clientRect.height / 2;
                     var tx = viewportX - imageCenterX;
                     var ty = viewportY - imageCenterY;
                     var tz = 0;
@@ -291,7 +289,6 @@
                     this.wrap.parentNode.insertBefore(this.img, this.wrap);
                     this.wrap.parentNode.removeChild(this.wrap);
                     document.body.removeChild(this.overlay);
-                    document.body.classList.remove("zoom-overlay-transitioning");
                 }
             }, {
                 key: "close",
@@ -303,7 +300,8 @@
                         this.img.removeAttribute("style");
                     }
                     this.wrap.style.transform = "none";
-                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["d"])(this.img, "transitionend", function() {
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_js__["e"])(this.img, "transitionend", function() {
+                        document.body.classList.remove("zoom-overlay-transitioning");
                         _this.dispose();
                         document.body.classList.remove("zoom-overlay-open");
                     });

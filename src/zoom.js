@@ -44,7 +44,7 @@ var prepareZoom = e => {
         return;
     }
 
-    closeCurrent(true);
+    closeCurrent();
 
     current = new ZoomImage(e.target, offset);
     current.zoom();
@@ -52,15 +52,11 @@ var prepareZoom = e => {
     addCloseListeners();
 };
 
-var closeCurrent = force => {
+var closeCurrent = () => {
     if (current == null) {
         return;
     }
-    if (force) {
-        current.dispose();
-    } else {
-        current.close();
-    }
+    current.close();
     removeCloseListeners();
     current = null;
 };
@@ -124,5 +120,6 @@ var handleClick = () => {
 
 var zoom = Object.create(null);
 zoom.setup = setup;
+window.zoom = zoom
 
 export { zoom };

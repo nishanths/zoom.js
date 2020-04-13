@@ -21,7 +21,7 @@
     "babel-cli": "6.18.0",
     "babel-plugin-iife-wrap": "1.1.0",
     "babel-preset-es2015-script": "1.1.0",
-    "uglifyjs": "2.4.10",
+    "uglify-js": "3.8.1",
     "webpack": "2.2.0-rc.3"
   }
 }

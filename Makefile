@@ -2,7 +2,7 @@
 
 webpack = ./node_modules/webpack/bin/webpack.js
 babel = ./node_modules/babel-cli/bin/babel.js
-uglifyjs = node ./node_modules/uglifyjs/bin/uglifyjs
+uglifyjs = node ./node_modules/uglify-js/bin/uglifyjs
 
 define PREAMBLE
 /**

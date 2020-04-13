@@ -19,4 +19,15 @@ var once = (elem, type, handler) => {
     elem.addEventListener(type, fn);
 };
 
-export { windowWidth, windowHeight, elemOffset, once };
+var backgroundImageDimensions = (elem) => {
+    var imageSrc = elem.style.backgroundImage.replace(/url\((['"])?(.*?)\1\)/gi, '$2').split(',')[0]
+    var image = new Image()
+    image.src = imageSrc
+
+    return {
+        naturalWidth: image.naturalWidth,
+        naturalHeight: image.naturalHeight,
+    }
+}
+
+export { windowWidth, windowHeight, elemOffset, once, backgroundImageDimensions };
