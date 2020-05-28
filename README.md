@@ -11,7 +11,7 @@ This is a port of the original version by @fat: <https://github.com/fat/zoom.js>
 
 ## Repo status
 
-May 2020: This package is not actively developed, except for pull requests which will be
+May 2020: This package is __not actively developed,  except for pull requests__ which will be
 actively reviewed + merged.
 
 ## Usage
