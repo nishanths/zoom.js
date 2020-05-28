@@ -1,7 +1,7 @@
 {
   "name": "@nishanths/zoom.js",
   "version": "3.1.0",
-  "description": "Medium.com-like image zoom with no dependencies",
+  "description": "Medium.com-like image zoom with no dependencies (fork of fat/zoom.js)",
   "main": "index.js",
   "repository": {
     "type": "git",
