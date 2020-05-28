@@ -50,6 +50,9 @@ var prepareZoom = e => {
     current.zoom();
 
     addCloseListeners();
+    
+    e.preventDefault();
+    e.stopPropagation();
 };
 
 var closeCurrent = force => {
@@ -118,8 +121,10 @@ var handleTouchMove = e => {
     }
 };
 
-var handleClick = () => {
+var handleClick = e => {
     closeCurrent();
+    e.preventDefault();
+    e.stopPropagation();
 };
 
 var zoom = Object.create(null);
