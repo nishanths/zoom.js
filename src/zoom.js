@@ -31,6 +31,9 @@ var setup = (elem) => {
 };
 
 var prepareZoom = e => {
+    e.preventDefault();
+    e.stopPropagation();
+
     if (document.body.classList.contains("zoom-overlay-open")) {
         return;
     }
@@ -50,9 +53,6 @@ var prepareZoom = e => {
     current.zoom();
 
     addCloseListeners();
-    
-    e.preventDefault();
-    e.stopPropagation();
 };
 
 var closeCurrent = force => {
@@ -122,9 +122,9 @@ var handleTouchMove = e => {
 };
 
 var handleClick = e => {
-    closeCurrent();
     e.preventDefault();
     e.stopPropagation();
+    closeCurrent();
 };
 
 var zoom = Object.create(null);

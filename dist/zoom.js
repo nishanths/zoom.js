@@ -129,6 +129,8 @@
             elem.addEventListener("click", prepareZoom);
         };
         var prepareZoom = function prepareZoom(e) {
+            e.preventDefault();
+            e.stopPropagation();
             if (document.body.classList.contains("zoom-overlay-open")) {
                 return;
             }
@@ -200,7 +202,9 @@
                 e.target.removeEventListener("touchmove", handleTouchMove);
             }
         };
-        var handleClick = function handleClick() {
+        var handleClick = function handleClick(e) {
+            e.preventDefault();
+            e.stopPropagation();
             closeCurrent();
         };
         var zoom = Object.create(null);
