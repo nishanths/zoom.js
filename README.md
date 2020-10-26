@@ -2,7 +2,7 @@
 
 ## Repo status
 
-_August 2020_: I will be actively maintaining this repository again, reviewing pull requests, and implementing features in the next 2 months. The plan is to release a new major version with a more versatile API and better support for `<figure>` elements, `srcset` attributes, etc. I apologize for any lack of activity and response earlier.
+~~August 2020~~ _October 2020_: I will be actively maintaining this repository again, reviewing pull requests, and implementing features in the next 2 months. The plan is to release a new major version with a more versatile API and better support for `<figure>` elements, `srcset` attributes, etc. I apologize for any lack of activity and response earlier.
 
 _May 2020_: This package is not actively developed,  except for pull requests which will be
 actively reviewed + merged.
