@@ -2,12 +2,10 @@
 
 ## Repo status
 
-~~August 2020~~ _October 2020_: I will be actively maintaining this repository again, reviewing pull requests, and implementing features in the next 2 months. The plan is to release a new major version with a more versatile API and better support for `<figure>` elements, `srcset` attributes, etc. I apologize for any lack of activity and response earlier.
+* Nov 2020: Maintained, but bug fixes only. No new features currently, please.
+  There may eventually be a new major version with new API and features.
 
-_May 2020_: This package is not actively developed,  except for pull requests which will be
-actively reviewed + merged.
-
----
+## Overview
 
 [![npm (scoped)](https://img.shields.io/npm/v/@nishanths/zoom.js.svg)](https://www.npmjs.com/package/@nishanths/zoom.js)
 
