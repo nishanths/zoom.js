@@ -1,0 +1,25 @@
+{
+	"name": "@nishanths/zoom.js",
+	"version": "4.0.0-alpha.0",
+	"description": "Medium.com-like image zoom plugin with no dependecies (fork of fat/zoom.js)",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nishanths/zoom.js"
+	},
+	"bugs": {
+		"url": "https://github.com/nishanths/zoom.js/issues"
+	},
+	"author": "Nishanth Shanmugham<bambooparch@gmail.com>",
+	"homepage": "https://github.com/nishanths/zoom.js",
+	"keywords": [
+		"zoom",
+		"image"
+	],
+	"license": "MIT",
+	"private": false,
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"devDependencies": {
+		"typescript-formatter": "^7.2.2"
+	}
+}
