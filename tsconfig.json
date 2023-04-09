@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"incremental": true,
+		"tsBuildInfoFile": "dist.tsbuildinfo",
+		"target": "es2015",
+		"module": "es2015",
+		"lib": ["esnext", "dom"],
+		"outDir": "./dist",
+		"downlevelIteration": true,
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"declaration": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true
+	},
+	"include": [
+		"./src"
+	]
+}
