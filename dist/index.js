@@ -1,1 +1,1 @@
-"use strict";
+export { defaultConfig, dismissZoom, zoom } from "./zoom.js";

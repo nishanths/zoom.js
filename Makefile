@@ -5,6 +5,7 @@ default:
 .PHONY: build
 build:
 	npx tsc
+	cp src/zoom.css dist
 
 clean:
 	rm -rf dist/*
@@ -18,3 +19,6 @@ clean:
 #
 # # 2.0.0-beta.0 => 2.0.0-beta.1
 # npm version prerelease
+#
+# npm publish --tag alpha to have your package marked as such on npmjs.com and
+# "withheld" from automatic installation.

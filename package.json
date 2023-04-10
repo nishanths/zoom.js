@@ -9,7 +9,7 @@
 	"bugs": {
 		"url": "https://github.com/nishanths/zoom.js/issues"
 	},
-	"author": "Nishanth Shanmugham<bambooparch@gmail.com>",
+	"author": "Nishanth Shanmugham",
 	"homepage": "https://github.com/nishanths/zoom.js",
 	"keywords": [
 		"zoom",
@@ -22,7 +22,7 @@
 	"types": "dist/index.d.ts",
 	"files": [
 		"dist",
-		"src"
+		"LICENSE.original"
 	],
 	"devDependencies": {
 		"typescript": "^5.0.4"
