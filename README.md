@@ -1,7 +1,8 @@
 # zoom.js
 
-An image zooming plugin for the web, as seen on [Medium][medium]. This project
-is a port of [`fat/zoom.js`][fat] but has no jQuery or Bootstrap dependencies.
+An image zooming plugin, as seen on older versions of [medium.com][medium]. This
+project is a port of [`fat/zoom.js`][fat] but has no jQuery or Bootstrap
+dependencies.
 
 Version 4 is written in TypeScript, has a new API, includes typings, and has no
 dependencies.
@@ -25,25 +26,25 @@ the image, clicking the overlay around the image, scrolling away, or hitting the
 
 ## Usage
 
-Install the package.
+Install the package:
 
 ```
 npm i @nishanths/zoom.js
 ```
 
-Link the `dist/zoom.css` file in your application. For example:
+Link the `dist/zoom.css` file in your application:
 
 ```html
 <link href="zoom.css" rel="stylesheet">
 ```
 
-Import and use symbols from the package. For example:
+Import and use symbols from the package:
 
 ```ts
 import { zoom } from "@nishanths/zoom.js"
 ```
 
-The JavaScript files in `dist/` are ES modules.
+The js files in `dist/` are ES modules.
 
 Note that the `package.json` for the package specifies the `module` property but
 not the `main` property. You may need a module-aware tool to correctly include
