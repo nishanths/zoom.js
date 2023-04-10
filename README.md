@@ -139,4 +139,4 @@ license. See the `LICENSE` file at the root of the repository.
 [medium]: https://medium.com
 [demo]: https://nishanths.github.io/zoom.js
 [zoom-in-cursor]: https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
-[npm]: https://www.npmjs.com/package/@nishanths/zoom.js?activeTab=versions
+[npm]: https://www.npmjs.com/package/@nishanths/zoom.js
