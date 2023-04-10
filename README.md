@@ -79,7 +79,7 @@ export type Config = {
 export const defaultConfig: Config = {
 	padding: 40,
 	paddingNarrow: 25,
-	dismissScrollDelta: 10,
+	dismissScrollDelta: 15,
 	dismissTouchDelta: 10,
 }
 

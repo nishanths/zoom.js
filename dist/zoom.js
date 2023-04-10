@@ -1,5 +1,5 @@
-import { toOffset, usableWidth } from "./common";
-import { ZoomImage } from "./zoom-image";
+import { toOffset, usableWidth } from "./common.js";
+import { ZoomImage } from "./zoom-image.js";
 let activeZoom = null; // actively zoomed image, or null.
 let initialScrollPos = null;
 let initialTouchPos = null;
@@ -95,7 +95,7 @@ function handleDocumentClick(e) {
 export const defaultConfig = {
     padding: 40,
     paddingNarrow: 25,
-    dismissScrollDelta: 10,
+    dismissScrollDelta: 15,
     dismissTouchDelta: 10,
 };
 // zoom zooms the specified image. The function throws if there is already an

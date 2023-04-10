@@ -1,4 +1,4 @@
-import { unwrap, usableHeight, usableWidth, viewportHeight, viewportWidth, wrap } from "./common";
+import { unwrap, usableHeight, usableWidth, viewportHeight, viewportWidth, wrap } from "./common.js";
 
 // scaleFactor returns the scale factor with which the image should be
 // transformed. The tw and th parameters specify the maximum usable width and

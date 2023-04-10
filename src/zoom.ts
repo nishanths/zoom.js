@@ -1,5 +1,5 @@
-import { toOffset, usableWidth } from "./common";
-import { ZoomImage } from "./zoom-image";
+import { toOffset, usableWidth } from "./common.js";
+import { ZoomImage } from "./zoom-image.js";
 
 let activeZoom: ZoomImage | null = null // actively zoomed image, or null.
 let initialScrollPos: number | null = null;
@@ -136,7 +136,7 @@ export type Config = {
 export const defaultConfig: Config = {
 	padding: 40,
 	paddingNarrow: 25,
-	dismissScrollDelta: 10,
+	dismissScrollDelta: 15,
 	dismissTouchDelta: 10,
 }
 

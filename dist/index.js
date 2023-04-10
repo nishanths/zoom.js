@@ -1,1 +1,1 @@
-export { defaultConfig, dismissZoom, zoom } from "./zoom";
+export { defaultConfig, dismissZoom, zoom } from "./zoom.js";
