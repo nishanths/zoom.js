@@ -87,10 +87,10 @@ export const defaultConfig: Config = {
 // image actively zoomed at the time of the call.
 //
 // The zoom is either dimissed by user interaction (e.g. clicking, scrolling
-// away) or can be dismissed programatically by calling dismissZoom.
+// away) or can be dismissed programmatically by calling dismissZoom.
 export function zoom(img: HTMLImageElement, cfg: Config = defaultConfig): void
 
-// dismissZoom programatically dismisses the presently active zoom. The
+// dismissZoom programmatically dismisses the presently active zoom. The
 // function throws if there is no zoom active at the time of the call.
 export function dismissZoom(): void
 ```
