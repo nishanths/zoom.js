@@ -67,7 +67,7 @@ function handleDocumentScroll(): void {
 }
 
 function handleDocumentKeyup(e: KeyboardEvent) {
-	if (e.keyCode !== 27) {
+	if (e.code !== "Escape") {
 		return
 	}
 	closeActiveZoom()

@@ -56,7 +56,7 @@ function handleDocumentScroll() {
     closeActiveZoom();
 }
 function handleDocumentKeyup(e) {
-    if (e.keyCode !== 27) {
+    if (e.code !== "Escape") {
         return;
     }
     closeActiveZoom();
@@ -102,11 +102,11 @@ export const defaultConfig = {
 // image actively zoomed at the time of the call.
 //
 // The zoom is either dimissed by user interaction (e.g. clicking, scrolling
-// away) or can be dismissed programatically by calling dismissZoom.
+// away) or can be dismissed programmatically by calling dismissZoom.
 export function zoom(img, cfg = defaultConfig) {
     openActiveZoom(img, cfg !== undefined ? cfg : defaultConfig);
 }
-// dismissZoom programatically dismisses the presently active zoom. The
+// dismissZoom programmatically dismisses the presently active zoom. The
 // function throws if there is no zoom active at the time of the call.
 export function dismissZoom() {
     closeActiveZoom();
