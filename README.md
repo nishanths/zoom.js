@@ -20,12 +20,10 @@ Version 4 is written in TypeScript and has a new API.
 
 ## Usage
 
-Install the package. Version 4 is currently a pre-release, so you will need
-to explicitly specify the version. See `package.json` for the latest version
-number.
+Install the package.
 
 ```
-npm i @nishanths/zoom.js@4.0.0-alpha.2
+npm i @nishanths/zoom.js
 ```
 
 Link the `dist/zoom.css` file in your application. For example:
