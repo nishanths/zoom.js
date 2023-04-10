@@ -3,7 +3,8 @@
 An image zooming plugin for the web, as seen on [Medium][medium]. This project
 is a port of [`fat/zoom.js`][fat] but has no jQuery or Bootstrap dependencies.
 
-Version 4 is written in TypeScript and has a new API.
+Version 4 is written in TypeScript, has a new API, includes typings, and has no
+dependencies.
 
 [https://www.npmjs.com/package/@nishanths/zoom.js][npm]
 
@@ -95,9 +96,8 @@ export function dismissZoom(): void
 
 ### Example
 
-The following TypeScript program makes all `<img>` elements on the page zoomable
-when clicked. A zoomed image will be dismissed automatically when the user e.g.
-scrolls away.
+The following TypeScript program makes all `<img>` elements on the page
+zoomable.
 
 ```ts
 import { zoom } from "@nishanths/zoom.js"
@@ -113,18 +113,18 @@ imgs.forEach(img => { setupZoom(img) })
 
 ### Notes
 
-**CSS class names:** All CSS class names used by the package are prefixed with
-`zoom-`.
+All CSS class names used by the package are prefixed with `zoom-`.
 
-**Cursor for zoomable images:** You can add the class name `zoom-cursor` to a
-zoomable `<img>` element to show an indicative [`zoom-in`
-cursor][zoom-in-cursor] instead of the default cursor.
+Add the class name `zoom-cursor` to a zoomable `<img>` element to show
+an indicative [`zoom-in` cursor][zoom-in-cursor] instead of the default cursor.
 
-**Potential event handling conflicts**: While an image zoom is active, the
-program listens for `click` events on `document.body` with `useCapture` set to
-`true`, and the handler function calls `e.stopPropagation()`. This may interfere
-with other `click` event handlers on the page while image zoom is active. The
-event listener is removed when image zoom is dismissed.
+The program appends the DOM node for the overlay, which appears when an image is
+zoomed, to the end of `document.body`.
+
+While an image is zoomed, the program listens for `click` events on
+`document.body` with `useCapture` set to `true`, and the handler function calls
+`e.stopPropagation()`. This may interfere with other `click` event handlers on
+the page. The event listener is removed when zoom is dismissed.
 
 ## License
 
