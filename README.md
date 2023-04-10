@@ -2,8 +2,8 @@
 
 ## Repo status
 
-* Nov 2020: Maintained, but bug fixes only. No new features currently, please.
-  There may eventually be a new major version with new API and features.
+This branch is not maintained. See the new
+[`v4`](https://github.com/nishanths/zoom.js/tree/v4) branch.
 
 ## Overview
 
@@ -44,7 +44,6 @@ You can use zoom.js directly as a script, or install via [npm](https://www.npmjs
   ```html
    <link href="css/zoom.css" rel="stylesheet">
    ```
-
 1. Import the package and call `zoom.setup(elem)` for each image you want to
    make zoomable.
 
