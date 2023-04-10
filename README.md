@@ -7,6 +7,8 @@ dependencies.
 
 Version 4 is written in TypeScript and offers a new API.
 
+[![npm (scoped)](https://img.shields.io/npm/v/@nishanths/zoom.js.svg)](https://www.npmjs.com/package/@nishanths/zoom.js)
+
 ## Branches
 
 * **v4**: The default branch. It contains code for version 4, which is the current
