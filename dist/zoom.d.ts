@@ -7,4 +7,4 @@ export type Config = {
 export declare const defaultConfig: Config;
 export declare function zoom(img: HTMLImageElement, cfg?: Config, onDismiss?: () => void): void;
 export declare function dismissZoom(): void;
-export declare function zoomActive(): HTMLImageElement | null;
+export declare function zoomed(): HTMLImageElement | null;

@@ -94,8 +94,8 @@ export const defaultConfig: Config = {
 // The onDismiss callback, if provided, is invoked when the zoom is dismissed.
 // The zoom can either be dimissed by user interaction (e.g. clicking, scrolling
 // away), or it can be dismissed programmatically by calling dismissZoom.
-// onDismiss is called as soon as the zoom is dismissed. Dismissal animations
-// and transitions may still be in progress at the time of the call.
+// onDismiss is invoked as soon as the zoom is dismissed. Dismissal animations
+// and transitions may still be in progress when onDismiss is invoked.
 export function zoom(
 	img: HTMLImageElement,
 	cfg: Config = defaultConfig,
@@ -106,9 +106,9 @@ export function zoom(
 // function throws if there is no zoom active at the time of the call.
 export function dismissZoom(): void
 
-// zoomActive returns the <img> element that is zoomed if one is actively
-// zoomed. Otherwise it returns null.
-export function zoomActive(): HTMLImageElement | null
+// zoomed returns the <img> element that is presently zoomed, if one is
+// present. Otherwise it returns null.
+export function zoomed(): HTMLImageElement | null
 ```
 
 ### Examples
