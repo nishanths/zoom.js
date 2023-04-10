@@ -5,7 +5,7 @@ is a port of [`fat/zoom.js`][fat] but has no jQuery or Bootstrap dependencies.
 
 Version 4 is written in TypeScript and has a new API.
 
-[![npm (scoped)](https://img.shields.io/npm/v/@nishanths/zoom.js.svg)](https://www.npmjs.com/package/@nishanths/zoom.js)
+[https://www.npmjs.com/package/@nishanths/zoom.js][npm]
 
 ## Branches
 
@@ -141,3 +141,4 @@ license. See the `LICENSE` file at the root of the repository.
 [medium]: https://medium.com
 [demo]: https://nishanths.github.io/zoom.js
 [zoom-in-cursor]: https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
+[npm]: https://www.npmjs.com/package/@nishanths/zoom.js?activeTab=versions
