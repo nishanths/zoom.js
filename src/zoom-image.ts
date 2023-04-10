@@ -60,11 +60,11 @@ export class ZoomImage {
 	}
 
 	private animate(scale: number) {
-		const imageOffset = ZoomImage.elemOffset(this.img, window, document.documentElement);
-		const wx = window.scrollX + (viewportWidth(document.documentElement) / 2);
-		const wy = window.scrollY + (viewportHeight(document.documentElement) / 2);
-		const ix = imageOffset.left + (this.img.width / 2);
-		const iy = imageOffset.top + (this.img.height / 2);
+		const imageOffset = ZoomImage.elemOffset(this.img, window, document.documentElement)
+		const wx = window.scrollX + (viewportWidth(document.documentElement) / 2)
+		const wy = window.scrollY + (viewportHeight(document.documentElement) / 2)
+		const ix = imageOffset.left + (this.img.width / 2)
+		const iy = imageOffset.top + (this.img.height / 2)
 
 		this.img.style.transform = `scale(${scale})`;
 		this.wrapper.style.transform = `translate3d(${wx - ix}px, ${wy - iy}px, 0)`;

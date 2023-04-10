@@ -46,17 +46,17 @@ function closeActiveZoom(): void {
 }
 
 function addCloseListeners(): void {
-	document.addEventListener("scroll", handleDocumentScroll);
-	document.addEventListener("keyup", handleDocumentKeyup);
-	document.addEventListener("touchstart", handleDocumentTouchStart);
-	document.addEventListener("click", handleDocumentClick, true);
+	document.addEventListener("scroll", handleDocumentScroll)
+	document.addEventListener("keyup", handleDocumentKeyup)
+	document.addEventListener("touchstart", handleDocumentTouchStart)
+	document.addEventListener("click", handleDocumentClick, true)
 }
 
 function removeCloseListeners(): void {
-	document.removeEventListener("scroll", handleDocumentScroll);
-	document.removeEventListener("keyup", handleDocumentKeyup);
-	document.removeEventListener("touchstart", handleDocumentTouchStart);
-	document.removeEventListener("click", handleDocumentClick, true);
+	document.removeEventListener("scroll", handleDocumentScroll)
+	document.removeEventListener("keyup", handleDocumentKeyup)
+	document.removeEventListener("touchstart", handleDocumentTouchStart)
+	document.removeEventListener("click", handleDocumentClick, true)
 }
 
 function handleDocumentScroll(): void {

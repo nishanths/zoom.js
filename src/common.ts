@@ -26,6 +26,6 @@ export function wrap(elem: Node, wrapper: Node): void {
 
 // unwrap undoes the operation done by the wrap function.
 export function unwrap(elem: Node, wrapper: Node): void {
-	wrapper.parentNode?.insertBefore(elem, wrapper);
-	wrapper.parentNode?.removeChild(wrapper);
+	wrapper.parentNode?.insertBefore(elem, wrapper)
+	wrapper.parentNode?.removeChild(wrapper)
 }

@@ -102,7 +102,7 @@ function handleDocumentClick(e) {
 }
 export const defaultConfig = {
     padding: 40,
-    paddingNarrow: 25,
+    paddingNarrow: 20,
     dismissScrollDelta: 15,
     dismissTouchDelta: 10,
 };
@@ -123,7 +123,7 @@ export function dismissZoom() {
     closeActiveZoom();
 }
 // zoomActive returns the <img> element that is zoomed if one is actively
-// zoomed at the time of the call. Otherwise it returns null.
+// zoomed. Otherwise it returns null.
 export function zoomActive() {
     if (activeZoom !== null) {
         return activeZoom.img;
