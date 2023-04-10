@@ -20,7 +20,7 @@ function scaleFactor(img: HTMLImageElement, tw: number, th: number) {
 // ZoomImage manages the lifecycle of a zoom and dismissal
 // on a single <img> element.
 export class ZoomImage {
-	private img: HTMLImageElement
+	readonly img: HTMLImageElement
 	private oldTransform: string
 	private wrapper: HTMLDivElement
 	private overlay: HTMLDivElement
@@ -88,7 +88,7 @@ export class ZoomImage {
 		))
 	}
 
-	dismiss(onDone?: () => void) {
+	dismiss() {
 		this.img.addEventListener("transitionend", (): void => {
 			document.body.classList.remove("zoom-overlay-transitioning")
 
@@ -98,9 +98,6 @@ export class ZoomImage {
 			unwrap(this.img, this.wrapper)
 			this.img.setAttribute("data-zoom-action", "zoom-in")
 			this.img.classList.remove("zoom-img")
-
-			// Notify with the done callback.
-			onDone?.()
 		}, { once: true })
 
 		document.body.classList.add("zoom-overlay-transitioning")

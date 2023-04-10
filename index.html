@@ -6,7 +6,7 @@
 		/* SIMPLE DEMO STYLES */
 		body {
 			font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-			font-size: 12px;
+			font-size: 14px;
 			line-height: 1.6;
 		}
 		.container {
@@ -131,11 +131,11 @@
 		</p>
 	</div>
 	<script type="module">
-		import { zoom, defaultConfig } from "/zoom.js/dist/index.js"
+		import { zoom } from "./dist/index.js"
 
 		function setupZoom(img) {
 			img.classList.add("zoom-cursor")
-			img.addEventListener("click", () => { zoom(img, { ...defaultConfig }) })
+			img.addEventListener("click", () => { zoom(img) })
 		}
 
 		const imgs = [...document.querySelectorAll("img")]

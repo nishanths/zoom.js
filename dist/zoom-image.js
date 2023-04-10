@@ -65,7 +65,7 @@ export class ZoomImage {
         this.hackForceRepaint();
         this.animate(scaleFactor(this.img, usableWidth(document.documentElement, this.offset), usableHeight(document.documentElement, this.offset)));
     }
-    dismiss(onDone) {
+    dismiss() {
         this.img.addEventListener("transitionend", () => {
             document.body.classList.remove("zoom-overlay-transitioning");
             // The following undoes the work done at the start of the
@@ -74,8 +74,6 @@ export class ZoomImage {
             unwrap(this.img, this.wrapper);
             this.img.setAttribute("data-zoom-action", "zoom-in");
             this.img.classList.remove("zoom-img");
-            // Notify with the done callback.
-            onDone === null || onDone === void 0 ? void 0 : onDone();
         }, { once: true });
         document.body.classList.add("zoom-overlay-transitioning");
         // The following undoes the work done in animate(), which is

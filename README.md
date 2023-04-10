@@ -6,7 +6,7 @@ is a port of [`fat/zoom.js`][fat] but has no jQuery or Bootstrap dependencies.
 Version 4 is written in TypeScript, has a new API, includes typings, and has no
 dependencies.
 
-[https://www.npmjs.com/package/@nishanths/zoom.js][npm]
+npm package: [https://www.npmjs.com/package/@nishanths/zoom.js][npm]
 
 ## Branches
 
@@ -18,6 +18,10 @@ dependencies.
 ## Demo
 
 [https://nishanths.github.io/zoom.js][demo]
+
+Zoom on an image by clicking on it. Dismiss the zoom by either clicking again on
+the image, clicking the overlay around the image, scrolling away, or hitting the
+`esc` key.
 
 ## Usage
 
@@ -38,6 +42,8 @@ Import and use symbols from the package. For example:
 ```ts
 import { zoom } from "@nishanths/zoom.js"
 ```
+
+The JavaScript files in `dist/` are ES modules.
 
 Note that the `package.json` for the package specifies the `module` property but
 not the `main` property. You may need a module-aware tool to correctly include
@@ -77,7 +83,7 @@ export type Config = {
 
 export const defaultConfig: Config = {
 	padding: 40,
-	paddingNarrow: 25,
+	paddingNarrow: 20,
 	dismissScrollDelta: 15,
 	dismissTouchDelta: 10,
 }
@@ -85,19 +91,30 @@ export const defaultConfig: Config = {
 // zoom zooms the specified image. The function throws if there is already an
 // image actively zoomed at the time of the call.
 //
-// The zoom is either dimissed by user interaction (e.g. clicking, scrolling
-// away) or can be dismissed programmatically by calling dismissZoom.
-export function zoom(img: HTMLImageElement, cfg: Config = defaultConfig): void
+// The onDismiss callback, if provided, is invoked when the zoom is dismissed.
+// The zoom can either be dimissed by user interaction (e.g. clicking, scrolling
+// away), or it can be dismissed programmatically by calling dismissZoom.
+// onDismiss is called as soon as the zoom is dismissed. Dismissal animations
+// and transitions may still be in progress at the time of the call.
+export function zoom(
+	img: HTMLImageElement,
+	cfg: Config = defaultConfig,
+	onDismiss?: () => void,
+): void
 
 // dismissZoom programmatically dismisses the presently active zoom. The
 // function throws if there is no zoom active at the time of the call.
 export function dismissZoom(): void
+
+// zoomActive returns the <img> element that is zoomed if one is actively
+// zoomed. Otherwise it returns null.
+export function zoomActive(): HTMLImageElement | null
 ```
 
-### Example
+### Examples
 
-The following TypeScript program makes all `<img>` elements on the page
-zoomable.
+The following TypeScript program makes all existing `<img>` elements on the page
+zoomable when the image is clicked.
 
 ```ts
 import { zoom } from "@nishanths/zoom.js"
@@ -111,20 +128,37 @@ const imgs = [...document.querySelectorAll("img")]
 imgs.forEach(img => { setupZoom(img) })
 ```
 
+The following TypeScript program customizes only certain properties of a
+`Config`, keeping the defaults for the other properties.
+
+```ts
+import { Config, defaultConfig } from "@nishanths/zoom.js"
+
+const customConfig: Config = {
+	...defaultConfig,
+	padding: 30,
+}
+```
+
 ### Notes
 
 All CSS class names used by the package are prefixed with `zoom-`.
 
-Add the class name `zoom-cursor` to a zoomable `<img>` element to show
-an indicative [`zoom-in` cursor][zoom-in-cursor] instead of the default cursor.
+Add the class name `zoom-cursor` to a zoomable `<img>` element to use an
+[`zoom-in` cursor][zoom-in-cursor] instead of the default cursor for the
+image.
 
-The program appends the DOM node for the overlay, which appears when an image is
-zoomed, to the end of `document.body`.
+The program appends the DOM node for the overlay element, which appears when an
+image is zoomed, to the end of `document.body`.
 
 While an image is zoomed, the program listens for `click` events on
 `document.body` with `useCapture` set to `true`, and the handler function calls
 `e.stopPropagation()`. This may interfere with other `click` event handlers on
-the page. The event listener is removed when zoom is dismissed.
+the page. The event listener is removed when the zoom is dismissed.
+
+When an image is zoomed, its `transform` style is replaced with a new value that
+is necessary for zooming. The old `transform` is restored when the zoom is
+dismissed.
 
 ## License
 

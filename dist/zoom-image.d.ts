@@ -1,5 +1,5 @@
 export declare class ZoomImage {
-    private img;
+    readonly img: HTMLImageElement;
     private oldTransform;
     private wrapper;
     private overlay;
@@ -11,5 +11,5 @@ export declare class ZoomImage {
     private hackForceRepaint;
     private animate;
     zoom(): void;
-    dismiss(onDone?: () => void): void;
+    dismiss(): void;
 }

@@ -1,23 +1,30 @@
 import { toOffset, usableWidth } from "./common.js";
 import { ZoomImage } from "./zoom-image.js";
 
-let activeZoom: ZoomImage | null = null // actively zoomed image, or null.
-let initialScrollPos: number | null = null;
-let initialTouchPos: number | null = null;
-let closeScrollDelta: number | null = null;
-let closeTouchDelta: number | null = null;
+// Values for the currently active zoomed instance.
+// There can be at most one.
+let activeZoom: ZoomImage | null = null
+let onZoomDismiss: (() => void) | null = null
+let initialScrollPos: number | null = null
+let initialTouchPos: number | null = null
+let closeScrollDelta: number | null = null
+let closeTouchDelta: number | null = null
 
-function openActiveZoom(img: HTMLImageElement, c: Config): void {
+function openActiveZoom(img: HTMLImageElement, c: Config, onDismiss?: () => void): void {
 	if (activeZoom !== null) {
 		throw "a zoom is already active"
 	}
 
 	const tooNarrow = img.width >= usableWidth(document.documentElement, toOffset(c.padding))
-	activeZoom = new ZoomImage(img, toOffset(tooNarrow ? c.paddingNarrow : c.padding))
-	activeZoom.zoom()
 
+	activeZoom = new ZoomImage(img, toOffset(tooNarrow ? c.paddingNarrow : c.padding))
+	onZoomDismiss = onDismiss !== undefined ? onDismiss : null
+	initialScrollPos = null
+	initialTouchPos = null
 	closeScrollDelta = c.dismissScrollDelta
 	closeTouchDelta = c.dismissTouchDelta
+
+	activeZoom.zoom()
 	addCloseListeners()
 }
 
@@ -27,12 +34,14 @@ function closeActiveZoom(): void {
 	}
 
 	removeCloseListeners()
+	activeZoom.dismiss()
+	onZoomDismiss?.()
+
 	closeScrollDelta = null
 	closeTouchDelta = null
 	initialScrollPos = null
 	initialTouchPos = null
-
-	activeZoom.dismiss()
+	onZoomDismiss = null
 	activeZoom = null
 }
 
@@ -135,7 +144,7 @@ export type Config = {
 
 export const defaultConfig: Config = {
 	padding: 40,
-	paddingNarrow: 25,
+	paddingNarrow: 20,
 	dismissScrollDelta: 15,
 	dismissTouchDelta: 10,
 }
@@ -143,14 +152,30 @@ export const defaultConfig: Config = {
 // zoom zooms the specified image. The function throws if there is already an
 // image actively zoomed at the time of the call.
 //
-// The zoom is either dimissed by user interaction (e.g. clicking, scrolling
-// away) or can be dismissed programmatically by calling dismissZoom.
-export function zoom(img: HTMLImageElement, cfg: Config = defaultConfig): void {
-	openActiveZoom(img, cfg !== undefined ? cfg : defaultConfig)
+// The onDismiss callback, if provided, is invoked when the zoom is dismissed.
+// The zoom can either be dimissed by user interaction (e.g. clicking, scrolling
+// away), or it can be dismissed programmatically by calling dismissZoom.
+// onDismiss is called as soon as the zoom is dismissed. Dismissal animations
+// and transitions may still be in progress at the time of the call.
+export function zoom(
+	img: HTMLImageElement,
+	cfg: Config = defaultConfig,
+	onDismiss?: () => void,
+): void {
+	openActiveZoom(img, cfg !== undefined ? cfg : defaultConfig, onDismiss)
 }
 
 // dismissZoom programmatically dismisses the presently active zoom. The
 // function throws if there is no zoom active at the time of the call.
 export function dismissZoom(): void {
 	closeActiveZoom()
+}
+
+// zoomActive returns the <img> element that is zoomed if one is actively
+// zoomed. Otherwise it returns null.
+export function zoomActive(): HTMLImageElement | null {
+	if (activeZoom !== null) {
+		return activeZoom.img
+	}
+	return null
 }

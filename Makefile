@@ -1,6 +1,5 @@
 .PHONY: default
-default:
-	@echo "default target does nothing" >&2
+default: build
 
 .PHONY: build
 build:
