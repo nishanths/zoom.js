@@ -97,6 +97,9 @@ export const defaultConfig: Config = {
 // away), or it can be dismissed programmatically by calling dismissZoom.
 // onDismiss is invoked as soon as the zoom is dismissed. Dismissal animations
 // and transitions may still be in progress when onDismiss is invoked.
+//
+// The image will not be zoomed if its naturalWidth and naturalHeight properties
+// are 0 (usually because the values are unavailable).
 export function zoom(
 	img: HTMLImageElement,
 	cfg: Config = defaultConfig,

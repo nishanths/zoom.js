@@ -14,6 +14,12 @@ function openActiveZoom(img: HTMLImageElement, c: Config, onDismiss?: () => void
 	if (activeZoomImage !== null) {
 		throw "a zoom is already active"
 	}
+	if (img.naturalWidth === 0 || img.naturalHeight === 0) {
+		// Spec: "These attributes return the intrinsic dimensions of the
+		// image, or zero if the dimensions are not known."
+		// https://html.spec.whatwg.org/multipage/embedded-content.html#dom-image-dev
+		return
+	}
 
 	const tooNarrow = img.width >= usableWidth(document.documentElement, toOffset(c.padding))
 
@@ -157,6 +163,9 @@ export const defaultConfig: Config = {
 // away), or it can be dismissed programmatically by calling dismissZoom.
 // onDismiss is invoked as soon as the zoom is dismissed. Dismissal animations
 // and transitions may still be in progress when onDismiss is invoked.
+//
+// The image will not be zoomed if its naturalWidth and naturalHeight properties
+// are 0 (usually because the values are unavailable).
 export function zoom(
 	img: HTMLImageElement,
 	cfg: Config = defaultConfig,
