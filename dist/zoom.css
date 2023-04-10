@@ -1,7 +1,7 @@
 :not(.zoom-overlay-open) img.zoom-cursor {
 	cursor: zoom-in;
 }
-.zoom-img,
+img.zoom-img,
 .zoom-img-wrapper {
 	position: relative;
 	z-index: 666;

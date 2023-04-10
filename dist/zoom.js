@@ -1,10 +1,10 @@
 import { toOffset, usableWidth } from "./common";
 import { ZoomImage } from "./zoom-image";
-const closeScrollThreshold = 10;
-const closeTouchThreshold = 10;
 let activeZoom = null; // actively zoomed image, or null.
 let initialScrollPos = null;
 let initialTouchPos = null;
+let closeScrollDelta = null;
+let closeTouchDelta = null;
 function openActiveZoom(img, c) {
     if (activeZoom !== null) {
         throw "a zoom is already active";
@@ -12,6 +12,8 @@ function openActiveZoom(img, c) {
     const tooNarrow = img.width >= usableWidth(document.documentElement, toOffset(c.padding));
     activeZoom = new ZoomImage(img, toOffset(tooNarrow ? c.paddingNarrow : c.padding));
     activeZoom.zoom();
+    closeScrollDelta = c.dismissScrollDelta;
+    closeTouchDelta = c.dismissTouchDelta;
     addCloseListeners();
 }
 function closeActiveZoom() {
@@ -19,6 +21,8 @@ function closeActiveZoom() {
         throw "no active zoom";
     }
     removeCloseListeners();
+    closeScrollDelta = null;
+    closeTouchDelta = null;
     initialScrollPos = null;
     initialTouchPos = null;
     activeZoom.dismiss();
@@ -37,12 +41,16 @@ function removeCloseListeners() {
     document.removeEventListener("click", handleDocumentClick, true);
 }
 function handleDocumentScroll() {
+    if (closeScrollDelta === null) {
+        // Should not happen since it is assigned in openActiveZoom.
+        throw "null closeScrollDelta";
+    }
     if (initialScrollPos === null) {
         initialScrollPos = window.scrollY;
         return;
     }
     const deltaY = Math.abs(initialScrollPos - window.scrollY);
-    if (deltaY < closeScrollThreshold) {
+    if (deltaY < closeScrollDelta) {
         return;
     }
     closeActiveZoom();
@@ -61,8 +69,9 @@ function handleDocumentTouchStart(e) {
     document.addEventListener("touchmove", handleDocumentTouchMove);
 }
 function handleDocumentTouchMove(e) {
-    if (e.touches.length === 0) {
-        return;
+    if (closeTouchDelta === null) {
+        // Should not happen since it is assigned in openActiveZoom.
+        throw "null closeTouchDelta";
     }
     if (initialTouchPos === null) {
         // Should not happen (see touchstart handler), but guard anyway.
@@ -70,7 +79,10 @@ function handleDocumentTouchMove(e) {
         // variable is non-null below.
         return;
     }
-    if (Math.abs(e.touches[0].pageY - initialTouchPos) < closeTouchThreshold) {
+    if (e.touches.length === 0) {
+        return;
+    }
+    if (Math.abs(e.touches[0].pageY - initialTouchPos) < closeTouchDelta) {
         return;
     }
     closeActiveZoom();
@@ -83,9 +95,14 @@ function handleDocumentClick(e) {
 export const defaultConfig = {
     padding: 40,
     paddingNarrow: 25,
+    dismissScrollDelta: 10,
+    dismissTouchDelta: 10,
 };
 // zoom zooms the specified image. The function throws if there is already an
-// image zoomed at the time of the call.
+// image actively zoomed at the time of the call.
+//
+// The zoom is either dimissed by user interaction (e.g. clicking, scrolling
+// away) or can be dismissed programatically by calling dismissZoom.
 export function zoom(img, cfg = defaultConfig) {
     openActiveZoom(img, cfg !== undefined ? cfg : defaultConfig);
 }

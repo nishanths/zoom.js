@@ -1,20 +1,23 @@
-import { toOffset, usableHeight, usableWidth } from "./common";
+import { toOffset, usableWidth } from "./common";
 import { ZoomImage } from "./zoom-image";
-
-const closeScrollThreshold = 10
-const closeTouchThreshold = 10
 
 let activeZoom: ZoomImage | null = null // actively zoomed image, or null.
 let initialScrollPos: number | null = null;
 let initialTouchPos: number | null = null;
+let closeScrollDelta: number | null = null;
+let closeTouchDelta: number | null = null;
 
 function openActiveZoom(img: HTMLImageElement, c: Config): void {
 	if (activeZoom !== null) {
 		throw "a zoom is already active"
 	}
+
 	const tooNarrow = img.width >= usableWidth(document.documentElement, toOffset(c.padding))
 	activeZoom = new ZoomImage(img, toOffset(tooNarrow ? c.paddingNarrow : c.padding))
 	activeZoom.zoom()
+
+	closeScrollDelta = c.dismissScrollDelta
+	closeTouchDelta = c.dismissTouchDelta
 	addCloseListeners()
 }
 
@@ -22,9 +25,13 @@ function closeActiveZoom(): void {
 	if (activeZoom === null) {
 		throw "no active zoom"
 	}
+
 	removeCloseListeners()
+	closeScrollDelta = null
+	closeTouchDelta = null
 	initialScrollPos = null
 	initialTouchPos = null
+
 	activeZoom.dismiss()
 	activeZoom = null
 }
@@ -44,12 +51,16 @@ function removeCloseListeners(): void {
 }
 
 function handleDocumentScroll(): void {
+	if (closeScrollDelta === null) {
+		// Should not happen since it is assigned in openActiveZoom.
+		throw "null closeScrollDelta"
+	}
 	if (initialScrollPos === null) {
 		initialScrollPos = window.scrollY
 		return
 	}
 	const deltaY = Math.abs(initialScrollPos - window.scrollY);
-	if (deltaY < closeScrollThreshold) {
+	if (deltaY < closeScrollDelta) {
 		return
 	}
 	closeActiveZoom()
@@ -71,8 +82,9 @@ function handleDocumentTouchStart(e: TouchEvent) {
 }
 
 function handleDocumentTouchMove(e: TouchEvent) {
-	if (e.touches.length === 0) {
-		return
+	if (closeTouchDelta === null) {
+		// Should not happen since it is assigned in openActiveZoom.
+		throw "null closeTouchDelta"
 	}
 	if (initialTouchPos === null) {
 		// Should not happen (see touchstart handler), but guard anyway.
@@ -80,7 +92,10 @@ function handleDocumentTouchMove(e: TouchEvent) {
 		// variable is non-null below.
 		return
 	}
-	if (Math.abs(e.touches[0].pageY - initialTouchPos) < closeTouchThreshold) {
+	if (e.touches.length === 0) {
+		return
+	}
+	if (Math.abs(e.touches[0].pageY - initialTouchPos) < closeTouchDelta) {
 		return
 	}
 	closeActiveZoom()
@@ -97,21 +112,39 @@ export type Config = {
 	// padding defines the horizontal space and the vertical space around
 	// the zoomed image.
 	padding: number
+
 	// paddingNarrow is similar to the padding property, except that it is
 	// used if the viewport width is too narrow, such that the use of the
 	// larger padding property may produce poor results.
 	//
 	// paddingNarrow should be <= padding, however this is not validated.
 	paddingNarrow: number
+
+	// dismissScrollDelta defines the vertical scrolling threshold at which
+	// the zoomed image is automatically dismissed. The value is the pixel
+	// difference between the original vertical scroll position and the
+	// subsequent vertical scroll positions.
+	dismissScrollDelta: number
+
+	// dismissTouchDelta defines the vertical touch movement threshold at
+	// which the zoomed image is automatically dismissed. The value is the
+	// pixel difference between the initial vertical touch position and
+	// subsequent vertical touch movements.
+	dismissTouchDelta: number
 }
 
 export const defaultConfig: Config = {
 	padding: 40,
 	paddingNarrow: 25,
+	dismissScrollDelta: 10,
+	dismissTouchDelta: 10,
 }
 
 // zoom zooms the specified image. The function throws if there is already an
 // image actively zoomed at the time of the call.
+//
+// The zoom is either dimissed by user interaction (e.g. clicking, scrolling
+// away) or can be dismissed programatically by calling dismissZoom.
 export function zoom(img: HTMLImageElement, cfg: Config = defaultConfig): void {
 	openActiveZoom(img, cfg !== undefined ? cfg : defaultConfig)
 }
