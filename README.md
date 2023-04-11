@@ -163,6 +163,11 @@ When an image is zoomed, its `transform` style is replaced with a new value that
 is necessary for zooming. The old `transform` is restored when the zoom is
 dismissed.
 
+### Browser compatibility
+
+I think any popular web browser versions released after 2016 should be supported
+by this package. Please read the source code for exact details.
+
 ## License
 
 The software in this repository is based on the original [`fat/zoom.js`][fat]

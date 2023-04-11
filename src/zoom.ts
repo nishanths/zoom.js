@@ -22,7 +22,6 @@ function openActiveZoom(img: HTMLImageElement, c: Config): void {
 	}
 
 	const tooNarrow = img.width >= usableWidth(document.documentElement, toOffset(c.padding))
-
 	activeZoomImage = new ZoomImage(img, toOffset(tooNarrow ? c.paddingNarrow : c.padding))
 
 	initialScrollPos = null
