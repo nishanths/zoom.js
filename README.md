@@ -35,7 +35,7 @@ Install the package:
 npm i @nishanths/zoom.js
 ```
 
-Link the `dist/zoom.css` file in your application:
+Link the `src/zoom.css` file in your application:
 
 ```html
 <link href="zoom.css" rel="stylesheet">
@@ -47,12 +47,23 @@ Import and use symbols from the package:
 import { zoom } from "@nishanths/zoom.js"
 ```
 
-The js files in `dist/` are ES modules.
-
 Note that the `package.json` for the package specifies the `module` property but
 not the `main` property. You may need a module-aware tool to correctly include
 the package in your bundle. For further reading, see this Stack Overflow
 [answer](https://stackoverflow.com/a/47537198/3309046) as a starting point.
+
+## Building locally
+
+To build the package locally, run the following from the root directory
+of the repo:
+
+```
+% npm install
+% make build
+```
+
+This should produce a `dist` directory. The js files in the `dist`
+directory are ES modules.
 
 ## Documentation
 

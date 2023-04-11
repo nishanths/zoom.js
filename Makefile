@@ -29,7 +29,7 @@ build:
 
 clean:
 	rm -rf dist
-	rm dist.tsbuildinfo
+	rm -f dist.tsbuildinfo
 
 version-minor:
 	npm version minor
