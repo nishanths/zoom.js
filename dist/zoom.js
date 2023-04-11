@@ -3,14 +3,13 @@ import { ZoomImage } from "./zoom-image.js";
 // Values for the currently active zoomed instance.
 // There can be at most one.
 let activeZoomImage = null;
-let onZoomDismiss = null;
 let initialScrollPos = null;
 let initialTouchPos = null;
 let closeScrollDelta = null;
 let closeTouchDelta = null;
-function openActiveZoom(img, c, onDismiss) {
+function openActiveZoom(img, c) {
     if (activeZoomImage !== null) {
-        throw "a zoom is already active";
+        activeZoomImage.dismissImmediate();
     }
     if (img.naturalWidth === 0 || img.naturalHeight === 0) {
         // Spec: "These attributes return the intrinsic dimensions of the
@@ -20,7 +19,6 @@ function openActiveZoom(img, c, onDismiss) {
     }
     const tooNarrow = img.width >= usableWidth(document.documentElement, toOffset(c.padding));
     activeZoomImage = new ZoomImage(img, toOffset(tooNarrow ? c.paddingNarrow : c.padding));
-    onZoomDismiss = onDismiss !== undefined ? onDismiss : null;
     initialScrollPos = null;
     initialTouchPos = null;
     closeScrollDelta = c.dismissScrollDelta;
@@ -30,17 +28,15 @@ function openActiveZoom(img, c, onDismiss) {
 }
 function closeActiveZoom() {
     if (activeZoomImage === null) {
-        throw "no active zoom";
+        return;
     }
     removeCloseListeners();
+    activeZoomImage.onDismissComplete(() => { activeZoomImage = null; });
     activeZoomImage.dismiss();
-    onZoomDismiss === null || onZoomDismiss === void 0 ? void 0 : onZoomDismiss();
     closeScrollDelta = null;
     closeTouchDelta = null;
     initialScrollPos = null;
     initialTouchPos = null;
-    onZoomDismiss = null;
-    activeZoomImage = null;
 }
 function addCloseListeners() {
     document.addEventListener("scroll", handleDocumentScroll);
@@ -112,30 +108,15 @@ export const defaultConfig = {
     dismissScrollDelta: 15,
     dismissTouchDelta: 10,
 };
-// zoom zooms the specified image. The function throws if there is already an
-// image actively zoomed at the time of the call.
-//
-// The onDismiss callback, if provided, is invoked when the zoom is dismissed.
-// The zoom can either be dimissed by user interaction (e.g. clicking, scrolling
-// away), or it can be dismissed programmatically by calling dismissZoom.
-// onDismiss is invoked as soon as the zoom is dismissed. Dismissal animations
-// and transitions may still be in progress when onDismiss is invoked.
+// zoom zooms the specified image.
 //
 // The image will not be zoomed if its naturalWidth and naturalHeight properties
 // are 0 (usually because the values are unavailable).
-export function zoom(img, cfg = defaultConfig, onDismiss) {
-    openActiveZoom(img, cfg !== undefined ? cfg : defaultConfig, onDismiss);
+export function zoom(img, cfg = defaultConfig) {
+    openActiveZoom(img, cfg !== undefined ? cfg : defaultConfig);
 }
-// dismissZoom programmatically dismisses the presently active zoom. The
-// function throws if there is no zoom active at the time of the call.
+// dismissZoom programmatically dismisses the presently active zoom. It is a
+// no-op if there is no zoom active at the time of the call.
 export function dismissZoom() {
     closeActiveZoom();
-}
-// zoomed returns the <img> element that is actively zoomed, if one is
-// present. Otherwise it returns null.
-export function zoomed() {
-    if (activeZoomImage !== null) {
-        return activeZoomImage.img;
-    }
-    return null;
 }

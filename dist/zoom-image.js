@@ -14,10 +14,15 @@ function scaleFactor(img, tw, th) {
     }
     return (tw / img.naturalWidth) * maxScaleFactor;
 }
-// ZoomImage manages the lifecycle of a zoom and dismissal
-// on a single <img> element.
+// ZoomImage manages a single zoom and dismiss lifecycle
+// on a <img> element.
 export class ZoomImage {
     constructor(img, offset) {
+        this.dismissCompleteNotified = false;
+        this.dismissCompleteCallbacks = [];
+        // necessary because dismissModifyDOM() cannot be safely called multiple
+        // times.
+        this.dismissModifiedDOM = false;
         this.img = img;
         this.oldTransform = img.style.transform;
         this.wrapper = ZoomImage.makeWrapper();
@@ -45,7 +50,17 @@ export class ZoomImage {
         const x = this.img.naturalWidth;
         return x;
     }
-    animate(scale) {
+    zoomModifyDOM() {
+        this.img.classList.add("zoom-img");
+        wrap(this.img, this.wrapper);
+        document.body.appendChild(this.overlay);
+    }
+    dismissModifyDOM() {
+        document.body.removeChild(this.overlay);
+        unwrap(this.img, this.wrapper);
+        this.img.classList.remove("zoom-img");
+    }
+    zoomAnimate(scale) {
         const imageOffset = ZoomImage.elemOffset(this.img, window, document.documentElement);
         const wx = window.scrollX + (viewportWidth(document.documentElement) / 2);
         const wy = window.scrollY + (viewportHeight(document.documentElement) / 2);
@@ -67,29 +82,49 @@ export class ZoomImage {
         this.wrapper.style.transform = `translate3d(${wx - ix}px, ${wy - iy}px, 0)`;
         document.body.classList.add("zoom-overlay-open");
     }
+    // NOTE: This method is idempotent, and can be called multiple times
+    // safely.
+    dismissAnimate() {
+        document.body.classList.remove("zoom-overlay-open");
+        this.img.style.transform = this.oldTransform;
+        this.wrapper.style.transform = "none";
+    }
     zoom() {
-        this.img.classList.add("zoom-img");
-        wrap(this.img, this.wrapper);
-        document.body.appendChild(this.overlay);
+        this.zoomModifyDOM();
         // repaint before animating.
         // TODO: is this necessary?
         this.hackForceRepaint();
-        this.animate(scaleFactor(this.img, usableWidth(document.documentElement, this.offset), usableHeight(document.documentElement, this.offset)));
+        this.zoomAnimate(scaleFactor(this.img, usableWidth(document.documentElement, this.offset), usableHeight(document.documentElement, this.offset)));
+    }
+    onDismissComplete(f) {
+        this.dismissCompleteCallbacks.push(f);
+    }
+    notifyDismissComplete() {
+        if (this.dismissCompleteNotified) {
+            return;
+        }
+        this.dismissCompleteCallbacks.forEach(f => f());
+        this.dismissCompleteNotified = true;
     }
     dismiss() {
         this.img.addEventListener("transitionend", () => {
             document.body.classList.remove("zoom-overlay-transitioning");
-            // The following undoes the work done at the start of the
-            // zoom() method.
-            document.body.removeChild(this.overlay);
-            unwrap(this.img, this.wrapper);
-            this.img.classList.remove("zoom-img");
+            if (!this.dismissModifiedDOM) {
+                this.dismissModifyDOM();
+                this.dismissModifiedDOM = true;
+            }
+            this.notifyDismissComplete();
         }, { once: true });
         document.body.classList.add("zoom-overlay-transitioning");
-        // The following undoes the work done in animate(), which is
-        // called from zoom().
-        document.body.classList.remove("zoom-overlay-open");
-        this.img.style.transform = this.oldTransform;
-        this.wrapper.style.transform = "none";
+        this.dismissAnimate();
+    }
+    dismissImmediate() {
+        this.dismissAnimate();
+        document.body.classList.remove("zoom-overlay-transitioning");
+        if (!this.dismissModifiedDOM) {
+            this.dismissModifyDOM();
+            this.dismissModifiedDOM = true;
+        }
+        this.notifyDismissComplete();
     }
 }

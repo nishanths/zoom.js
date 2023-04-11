@@ -17,14 +17,21 @@ function scaleFactor(img: HTMLImageElement, tw: number, th: number) {
 	return (tw / img.naturalWidth) * maxScaleFactor
 }
 
-// ZoomImage manages the lifecycle of a zoom and dismissal
-// on a single <img> element.
+// ZoomImage manages a single zoom and dismiss lifecycle
+// on a <img> element.
 export class ZoomImage {
 	readonly img: HTMLImageElement
 	private oldTransform: string
 	private wrapper: HTMLDivElement
 	private overlay: HTMLDivElement
 	private offset: number
+
+	private dismissCompleteNotified = false
+	private dismissCompleteCallbacks: (() => void)[] = []
+
+	// necessary because dismissModifyDOM() cannot be safely called multiple
+	// times.
+	private dismissModifiedDOM = false
 
 	constructor(img: HTMLImageElement, offset: number) {
 		this.img = img
@@ -59,13 +66,24 @@ export class ZoomImage {
 		return x
 	}
 
-	private animate(scale: number) {
+	private zoomModifyDOM() {
+		this.img.classList.add("zoom-img")
+		wrap(this.img, this.wrapper)
+		document.body.appendChild(this.overlay)
+	}
+
+	private dismissModifyDOM() {
+		document.body.removeChild(this.overlay)
+		unwrap(this.img, this.wrapper)
+		this.img.classList.remove("zoom-img")
+	}
+
+	private zoomAnimate(scale: number) {
 		const imageOffset = ZoomImage.elemOffset(this.img, window, document.documentElement)
 		const wx = window.scrollX + (viewportWidth(document.documentElement) / 2)
 		const wy = window.scrollY + (viewportHeight(document.documentElement) / 2)
 		const ix = imageOffset.left + (this.img.width / 2)
 		const iy = imageOffset.top + (this.img.height / 2)
-
 		// In img.style.transform, the "translate3d(0,0,0)" is
 		// effectively a no-op visually, but it exists as a workaround
 		// for a bug in macOS Safari version 16.3 (18614.4.6.1.6) and
@@ -83,39 +101,63 @@ export class ZoomImage {
 		document.body.classList.add("zoom-overlay-open")
 	}
 
+	// NOTE: This method is idempotent, and can be called multiple times
+	// safely.
+	private dismissAnimate() {
+		document.body.classList.remove("zoom-overlay-open")
+		this.img.style.transform = this.oldTransform
+		this.wrapper.style.transform = "none"
+	}
+
 	zoom() {
-		this.img.classList.add("zoom-img")
-		wrap(this.img, this.wrapper)
-		document.body.appendChild(this.overlay)
+		this.zoomModifyDOM()
 
 		// repaint before animating.
 		// TODO: is this necessary?
 		this.hackForceRepaint()
-
-		this.animate(scaleFactor(
+		this.zoomAnimate(scaleFactor(
 			this.img,
 			usableWidth(document.documentElement, this.offset),
 			usableHeight(document.documentElement, this.offset),
 		))
 	}
 
-	dismiss() {
-		this.img.addEventListener("transitionend", (): void => {
-			document.body.classList.remove("zoom-overlay-transitioning")
+	onDismissComplete(f: () => void) {
+		this.dismissCompleteCallbacks.push(f)
+	}
 
-			// The following undoes the work done at the start of the
-			// zoom() method.
-			document.body.removeChild(this.overlay)
-			unwrap(this.img, this.wrapper)
-			this.img.classList.remove("zoom-img")
+	private notifyDismissComplete() {
+		if (this.dismissCompleteNotified) {
+			return
+		}
+		this.dismissCompleteCallbacks.forEach(f => f())
+		this.dismissCompleteNotified = true
+	}
+
+	dismiss() {
+		this.img.addEventListener("transitionend", () => {
+			document.body.classList.remove("zoom-overlay-transitioning")
+			if (!this.dismissModifiedDOM) {
+				this.dismissModifyDOM()
+				this.dismissModifiedDOM = true
+			}
+
+			this.notifyDismissComplete()
 		}, { once: true })
 
 		document.body.classList.add("zoom-overlay-transitioning")
+		this.dismissAnimate()
+	}
 
-		// The following undoes the work done in animate(), which is
-		// called from zoom().
-		document.body.classList.remove("zoom-overlay-open")
-		this.img.style.transform = this.oldTransform
-		this.wrapper.style.transform = "none"
+	dismissImmediate() {
+		this.dismissAnimate()
+
+		document.body.classList.remove("zoom-overlay-transitioning")
+		if (!this.dismissModifiedDOM) {
+			this.dismissModifyDOM()
+			this.dismissModifiedDOM = true
+		}
+
+		this.notifyDismissComplete()
 	}
 }

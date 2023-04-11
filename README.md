@@ -70,13 +70,13 @@ export type Config = {
 	paddingNarrow: number
 
 	// dismissScrollDelta defines the vertical scrolling threshold at which
-	// the zoomed image is automatically dismissed. The value is the pixel
+	// the zoomed image is dismissed by user interaction. The value is the pixel
 	// difference between the original vertical scroll position and the
 	// subsequent vertical scroll positions.
 	dismissScrollDelta: number
 
 	// dismissTouchDelta defines the vertical touch movement threshold at
-	// which the zoomed image is automatically dismissed. The value is the
+	// which the zoomed image is dismissed by user interactoin. The value is the
 	// pixel difference between the initial vertical touch position and
 	// subsequent vertical touch movements.
 	dismissTouchDelta: number
@@ -89,30 +89,15 @@ export const defaultConfig: Config = {
 	dismissTouchDelta: 10,
 }
 
-// zoom zooms the specified image. The function throws if there is already an
-// image actively zoomed at the time of the call.
-//
-// The onDismiss callback, if provided, is invoked when the zoom is dismissed.
-// The zoom can either be dimissed by user interaction (e.g. clicking, scrolling
-// away), or it can be dismissed programmatically by calling dismissZoom.
-// onDismiss is invoked as soon as the zoom is dismissed. Dismissal animations
-// and transitions may still be in progress when onDismiss is invoked.
+// zoom zooms the specified image.
 //
 // The image will not be zoomed if its naturalWidth and naturalHeight properties
 // are 0 (usually because the values are unavailable).
-export function zoom(
-	img: HTMLImageElement,
-	cfg: Config = defaultConfig,
-	onDismiss?: () => void,
-): void
+export function zoom(img: HTMLImageElement, cfg: Config = defaultConfig): void
 
-// dismissZoom programmatically dismisses the presently active zoom. The
-// function throws if there is no zoom active at the time of the call.
+// dismissZoom programmatically dismisses the presently active zoom. It is a
+// no-op if there is no zoom active at the time of the call.
 export function dismissZoom(): void
-
-// zoomed returns the <img> element that is presently zoomed, if one is
-// present. Otherwise it returns null.
-export function zoomed(): HTMLImageElement | null
 ```
 
 ### Examples
