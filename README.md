@@ -106,7 +106,7 @@ export function dismissZoom(): void
 ### Examples
 
 The following TypeScript program makes all existing `<img>` elements on the page
-zoomable when the image is clicked.
+zoomable. Images are zoomed when they are clicked.
 
 ```ts
 import { zoom } from "@nishanths/zoom.js"
