@@ -123,13 +123,13 @@ zoomable. Images are zoomed when they are clicked.
 ```ts
 import { zoom } from "@nishanths/zoom.js"
 
-function setupZoom(img: HTMLImageElement) {
+function setup(img: HTMLImageElement) {
 	img.classList.add("zoom-cursor")
 	img.addEventListener("click", () => { zoom(img) })
 }
 
 const imgs = [...document.querySelectorAll("img")]
-imgs.forEach(img => { setupZoom(img) })
+imgs.forEach(img => { setup(img) })
 ```
 
 The following TypeScript program customizes only certain properties of a
