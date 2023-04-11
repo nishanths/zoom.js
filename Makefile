@@ -10,6 +10,13 @@ clean:
 	rm -rf dist/*
 	rm dist.tsbuildinfo
 
+minor-version:
+	npm version minor
+
+publish:
+	git push && git push --tags
+	npm publish
+
 # Relevant npm versioning commands
 # ref: https://stackoverflow.com/a/63112599/3309046
 #
