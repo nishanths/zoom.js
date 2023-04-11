@@ -66,19 +66,20 @@ export class ZoomImage {
         const wy = window.scrollY + (viewportHeight(document.documentElement) / 2);
         const ix = imageOffset.left + (this.img.width / 2);
         const iy = imageOffset.top + (this.img.height / 2);
-        // In img.style.transform, the "translate3d(0,0,0)" is
-        // effectively a no-op visually, but it exists as a workaround
-        // for a bug in macOS Safari version 16.3 (18614.4.6.1.6) and
-        // possibly other versions. The issue is that the element
-        // becomes invisible if solely "scale()" is present.
+        // In img.style.transform, use "scale3d()", not "scale()". There
+        // is an issue in macOS Safari version 16.3 (18614.4.6.1.6) and
+        // possibly other versions, if the latter is used. The element
+        // becomes invisible when zoomed in.
         //
         // In practice, the issue occurs more often (only?) with
         // elements near the top of the page being zoomed.
         //
         // As a side note, during debugging, the incorrectly invisible
-        // element reappeared if the scale value is <= 1. The issue
-        // occurs only for scale value > 1.
-        this.img.style.transform = `scale(${scale}) translate3d(0,0,0)`;
+        // element reappeared if the "scale()" value is <= 1. The issue
+        // occurs only for "scale()" value > 1.
+        //
+        // In any case, "scale3d()" fixes the issue.
+        this.img.style.transform = `scale3d(${scale},${scale},${scale})`;
         this.wrapper.style.transform = `translate3d(${wx - ix}px, ${wy - iy}px, 0)`;
         document.body.classList.add("zoom-overlay-open");
     }
