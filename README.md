@@ -47,6 +47,8 @@ Import and use symbols from the package:
 import { zoom } from "@nishanths/zoom.js"
 ```
 
+The js files in the `dist` directory are ES modules.
+
 Note that the `package.json` for the package specifies the `module` property but
 not the `main` property. You may need a module-aware tool to correctly include
 the package in your bundle. For further reading, see this Stack Overflow
@@ -54,16 +56,15 @@ the package in your bundle. For further reading, see this Stack Overflow
 
 ## Building locally
 
-To build the package locally, run the following from the root directory
-of the repo:
+To build the package locally, clone the repo, then run the following from the
+root directory:
 
 ```
 % make deps
 % make build
 ```
 
-This should produce a `dist` directory. The js files in the `dist`
-directory are ES modules.
+This should write files into the `dist` directory.
 
 ## Documentation
 
