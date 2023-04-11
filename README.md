@@ -58,7 +58,7 @@ To build the package locally, run the following from the root directory
 of the repo:
 
 ```
-% npm install
+% make deps
 % make build
 ```
 

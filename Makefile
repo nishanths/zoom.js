@@ -21,6 +21,10 @@
 .PHONY: default
 default: build
 
+.PHONY: deps
+deps:
+	npm ci
+
 .PHONY: build
 build:
 	mkdir -p dist
