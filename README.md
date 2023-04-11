@@ -9,7 +9,9 @@ dependencies.
 
 npm package: [https://www.npmjs.com/package/@nishanths/zoom.js][npm]
 
-## Branches
+## Branches and versions
+
+No API backwards compatibility guarantees even within the same major version.
 
 * **v4**: The default branch. It contains code for version 4, which is the
   current major version.
@@ -20,9 +22,10 @@ npm package: [https://www.npmjs.com/package/@nishanths/zoom.js][npm]
 
 [https://nishanths.github.io/zoom.js][demo]
 
-Zoom on an image by clicking on it. Dismiss the zoom by either clicking again on
-the image, clicking the overlay around the image, scrolling away, or hitting the
-`esc` key.
+Zoom on an image by clicking on it.
+
+Dismiss the zoom by either clicking again on the image, clicking the overlay
+around the image, scrolling away, or hitting the `esc` key.
 
 ## Usage
 
