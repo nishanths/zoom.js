@@ -27,13 +27,16 @@ build:
 	npx tsc
 	cp src/zoom.css dist
 
+.PHONY: clean
 clean:
 	rm -rf dist
 	rm -f dist.tsbuildinfo
 
-version-minor:
+.PHONY: release
+release: clean build
+	# increment version number
 	npm version minor
-
-publish:
+	# publish
 	git push && git push --tags
 	npm publish
+
