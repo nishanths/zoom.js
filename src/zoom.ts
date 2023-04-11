@@ -59,8 +59,8 @@ function addCloseListeners(): void {
 function removeCloseListeners(): void {
 	// NOTE: in removeEventListener calls, for the options parameter it is
 	// necessary only for the "capture" property to match. The other
-	// properties, such as "passive", don't matter. (Accordingly, even the
-	// type defintions don't allow for other properties to be specified.)
+	// properties, such as "passive", don't matter. Accordingly even the
+	// type defintions don't allow for other properties to be specified.
 	document.removeEventListener("scroll", handleDocumentScroll)
 	document.removeEventListener("keyup", handleDocumentKeyup)
 	document.removeEventListener("touchstart", handleDocumentTouchStart)
