@@ -9,14 +9,15 @@ dependencies.
 
 npm package: [https://www.npmjs.com/package/@nishanths/zoom.js][npm]
 
-## Branches and versions
-
-No API backwards compatibility guarantees even within the same major version.
+## Branches
 
 * **v4**: The default branch. It contains code for version 4, which is the
   current major version.
 * **master**: Frozen and no longer maintained. The final version on this branch
   is 3.1.0.
+
+No API backwards compatibility guarantees even within the same major version,
+so, if necessary, pin an exact version and upgrade manually.
 
 ## Demo
 
@@ -85,29 +86,22 @@ export type Config = {
 	paddingNarrow: number
 
 	// dismissScrollDelta defines the vertical scrolling threshold at which
-	// the zoomed image is dismissed by user interaction. The value is the pixel
-	// difference between the original vertical scroll position and the
-	// subsequent vertical scroll positions.
+	// the zoomed image is dismissed by user interaction. The value is the
+	// pixel difference between the original vertical scroll position and
+	// the subsequent vertical scroll positions.
 	dismissScrollDelta: number
 
 	// dismissTouchDelta defines the vertical touch movement threshold at
-	// which the zoomed image is dismissed by user interactoin. The value is the
-	// pixel difference between the initial vertical touch position and
+	// which the zoomed image is dismissed by user interaction. The value is
+	// the pixel difference between the initial vertical touch position and
 	// subsequent vertical touch movements.
 	dismissTouchDelta: number
 }
 
-export const defaultConfig: Config = {
-	padding: 40,
-	paddingNarrow: 20,
-	dismissScrollDelta: 15,
-	dismissTouchDelta: 10,
-}
-
 // zoom zooms the specified image.
 //
-// The image will not be zoomed if its naturalWidth and naturalHeight properties
-// are 0 (usually because the values are unavailable).
+// The image will not be zoomed if its naturalWidth or naturalHeight property
+// is 0 (usually because the values are unavailable).
 export function zoom(img: HTMLImageElement, cfg: Config = defaultConfig): void
 
 // dismissZoom programmatically dismisses the presently active zoom. It is a
@@ -124,7 +118,7 @@ zoomable. Images are zoomed when they are clicked.
 import { zoom } from "@nishanths/zoom.js"
 
 function setup(img: HTMLImageElement) {
-	img.classList.add("zoom-cursor")
+	img.classList.add("zoom-cursor") // use "cursor: zoom-in" style on hover
 	img.addEventListener("click", () => { zoom(img) })
 }
 
@@ -166,8 +160,8 @@ dismissed.
 
 ### Browser compatibility
 
-I think any popular web browser versions released after 2016 should be supported
-by this package. Please read the source code for exact details.
+Popular web browser versions released after 2016 should be supported by this
+package. Please read the source code for exact details.
 
 ## License
 

@@ -137,14 +137,14 @@ export type Config = {
 	paddingNarrow: number
 
 	// dismissScrollDelta defines the vertical scrolling threshold at which
-	// the zoomed image is dismissed by user interaction. The value is the pixel
-	// difference between the original vertical scroll position and the
-	// subsequent vertical scroll positions.
+	// the zoomed image is dismissed by user interaction. The value is the
+	// pixel difference between the original vertical scroll position and
+	// the subsequent vertical scroll positions.
 	dismissScrollDelta: number
 
 	// dismissTouchDelta defines the vertical touch movement threshold at
-	// which the zoomed image is dismissed by user interactoin. The value is the
-	// pixel difference between the initial vertical touch position and
+	// which the zoomed image is dismissed by user interaction. The value is
+	// the pixel difference between the initial vertical touch position and
 	// subsequent vertical touch movements.
 	dismissTouchDelta: number
 }
@@ -158,8 +158,8 @@ export const defaultConfig: Config = {
 
 // zoom zooms the specified image.
 //
-// The image will not be zoomed if its naturalWidth and naturalHeight properties
-// are 0 (usually because the values are unavailable).
+// The image will not be zoomed if its naturalWidth or naturalHeight property
+// is 0 (usually because the values are unavailable).
 export function zoom(img: HTMLImageElement, cfg: Config = defaultConfig): void {
 	openActiveZoom(img, cfg !== undefined ? cfg : defaultConfig)
 }
