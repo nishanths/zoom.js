@@ -75,7 +75,7 @@ function handleDocumentScroll(): void {
 		initialScrollPos = window.scrollY
 		return
 	}
-	const deltaY = Math.abs(initialScrollPos - window.scrollY);
+	const deltaY = Math.abs(initialScrollPos - window.scrollY)
 	if (deltaY < closeScrollDelta) {
 		return
 	}

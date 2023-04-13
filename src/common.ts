@@ -6,7 +6,7 @@ export function viewportHeight(docElem: HTMLElement) { return docElem.clientHeig
 
 // usableWidth and usableHeight return the maximum width and height of the
 // viewport that can be used to show the zoomed image. The value is defined
-// to be the viewport width (or height) minus the specified offset.
+// to be the viewport width (or viewport height) minus the specified offset.
 // docElem must be a document.documentElement value.
 export function usableWidth(docElem: HTMLElement, offset: number) { return viewportWidth(docElem) - offset }
 export function usableHeight(docElem: HTMLElement, offset: number) { return viewportHeight(docElem) - offset }

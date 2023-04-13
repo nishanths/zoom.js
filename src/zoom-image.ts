@@ -126,8 +126,9 @@ export class ZoomImage {
 	// onDismissComplete adds the callback f to be invoked
 	// when dismissal of the ZoomImage is complete.
 	//
-	// When a ZoomImage is dismissed using its dismissImmediate method,
-	// the callbacks will be invoked before dismissImmediate returns.
+	// When a ZoomImage is dismissed using its dismissImmediate method, the
+	// callbacks are guaranteed to be invoked before dismissImmediate
+	// returns.
 	onDismissComplete(f: () => void) {
 		this.dismissCompleteCallbacks.push(f)
 	}
@@ -140,7 +141,7 @@ export class ZoomImage {
 		this.dismissCompleteNotified = true
 	}
 
-	// dismiss dismisses the ZoomImage, with animations.
+	// dismiss dismisses the zoomed ZoomImage, with animations.
 	dismiss() {
 		this.img.addEventListener("transitionend", () => {
 			document.body.classList.remove("zoom-overlay-transitioning")
@@ -148,7 +149,6 @@ export class ZoomImage {
 				this.dismissModifyDOM()
 				this.dismissModifiedDOM = true
 			}
-
 			this.notifyDismissComplete()
 		}, { once: true })
 
@@ -156,8 +156,8 @@ export class ZoomImage {
 		this.dismissAnimate()
 	}
 
-	// dismissImmediate dismisses the ZoomImage, immediately, without
-	// animations. It is allowed to call dismissImmediate after dismiss, but
+	// dismissImmediate dismisses the zoomed ZoomImage, immediately, without
+	// animations. It is valid to call dismissImmediate after dismiss, but
 	// not the other way around.
 	dismissImmediate() {
 		this.dismissAnimate()
@@ -167,7 +167,6 @@ export class ZoomImage {
 			this.dismissModifyDOM()
 			this.dismissModifiedDOM = true
 		}
-
 		this.notifyDismissComplete()
 	}
 }
