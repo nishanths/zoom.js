@@ -1,7 +1,7 @@
 {
 	"name": "@nishanths/zoom.js",
 	"version": "4.4.0",
-	"description": "Medium.com-like image zoom plugin with no dependecies (fork of fat/zoom.js)",
+	"description": "Medium.com-like image zoom plugin with no dependencies (fork of fat/zoom.js)",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/nishanths/zoom.js"
