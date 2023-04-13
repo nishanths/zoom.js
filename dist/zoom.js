@@ -114,8 +114,8 @@ export const defaultConfig = {
 };
 // zoom zooms the specified image.
 //
-// The image will not be zoomed if its naturalWidth and naturalHeight properties
-// are 0 (usually because the values are unavailable).
+// The image will not be zoomed if its naturalWidth or naturalHeight property
+// is 0 (usually because the values are unavailable).
 export function zoom(img, cfg = defaultConfig) {
     openActiveZoom(img, cfg !== undefined ? cfg : defaultConfig);
 }
