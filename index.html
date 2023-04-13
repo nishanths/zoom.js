@@ -66,7 +66,7 @@
 			art party. Portland ethnic fixie, beard retro direct trade ugh scenester
 			Tumblr readymade authentic plaid pickled hashtag biodiesel.
 		</p>
-		<img src="demo/img/palm.jpg" data-action="zoom">
+		<img src="demo/img/palm.jpg">
 		<p>
 			Thundercats freegan Truffaut, four loko twee Austin scenester lo-fi seitan
 			High Life paleo quinoa cray. Schlitz butcher ethical Tumblr, pop-up DIY
@@ -101,7 +101,7 @@
 			booth banh mi. Trust fund locavore Helvetica, fashion axe selvage
 			authentic Shoreditch swag selfies stumptown +1.
 		</p>
-		<img src="demo/img/trees.jpg" data-action="zoom" class="pull-left">
+		<img src="demo/img/trees.jpg" class="pull-left">
 		<p>
 			Scenester chambray slow-carb, trust fund biodiesel ugh bicycle rights
 			cornhole. Gentrify messenger bag Truffaut tousled roof party pork belly
@@ -140,13 +140,13 @@
 	<script type="module">
 		import { zoom } from "./dist/index.js"
 
-		function setupZoom(img) {
+		function setup(img) {
 			img.classList.add("zoom-cursor")
 			img.addEventListener("click", () => { zoom(img) })
 		}
 
 		const imgs = [...document.querySelectorAll("img")]
-		imgs.forEach(img => { setupZoom(img) })
+		imgs.forEach(img => { setup(img) })
 	</script>
 </body>
 </html>
